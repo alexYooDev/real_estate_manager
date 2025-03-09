@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
 
 const Register = () => {
+
+  // role added to the formData state
   const [formData, setFormData] = useState({ name: '', email: '', password: '', role: '' });
   const navigate = useNavigate();
 
@@ -46,6 +48,8 @@ const Register = () => {
           className='w-full p-2 mb-4 border rounded'
         />
         <label htmlFor="roles">I am signing up as: </label>
+
+        {/* select / option components to allow users to choose role */}
         <select 
           className="w-full p-2 mb-4 border rounded" 
           name="roles" 
