@@ -8,6 +8,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       await axiosInstance.post('/api/auth/register', formData);
       alert('Registration successful. Please log in.');
@@ -45,7 +46,14 @@ const Register = () => {
           className='w-full p-2 mb-4 border rounded'
         />
         <label htmlFor="roles">I am signing up as: </label>
-        <select className="w-full p-2 mb-4 border rounded" name="roles" id="roles" onChange={(e) => setFormData({...formData, role: e.target.value})}>
+        <select 
+          className="w-full p-2 mb-4 border rounded" 
+          name="roles" 
+          id="roles" 
+          onChange={(e) => 
+            setFormData({...formData, role: e.target.value})
+            }
+        >
           <option value=""></option>
           <option value="agent">Real estate agent</option>
           <option value="customer">Customer</option>

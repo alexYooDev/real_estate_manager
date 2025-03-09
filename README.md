@@ -15,7 +15,7 @@ You have been provided with a starter project that includes user authentication 
 
 Select a meaningful use case for your CRUD operations. We will provide the list, you have to select it.
 
-### Real Estate Management System – CRUD for properties, agents, and customers.
+### Selected application: Real Estate Management System – CRUD for properties, agents, and customers.
 
 ### **2. Project Management with JIRA and SysML**
 
@@ -25,12 +25,12 @@ Select a meaningful use case for your CRUD operations. We will provide the list,
   * **Child issues & Subtasks** (breaking down development work)
   * **Sprint Planning** (organizing work into milestones)
 * Document your JIRA **board URL** in the project README.
-* The Link of Jira Scrum board for Real Estate Manager App : https://connect-team-nsm96osm.atlassian.net/jira/software/projects/REMS/summary 
+* The Link of my Jira Scrum board for Real Estate Manager App : https://connect-team-nsm96osm.atlassian.net/jira/software/projects/REMS/summary 
 * Draw a requirements diagram
 
 ### **3. Backend Development (Node.js + Express + MongoDB)**
 
-* Create a user-friendly interface to interact with your API (Some portion developed, follow task manager app)).
+* Create a user-friendly interface to interact with your API (Some portion developed, follow task manager app).
 * Implement **forms** for adding and updating records.
 * Display data using  **tables, cards, or lists (Follow how we showed data in task manager app)**
 
