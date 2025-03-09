@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    // Roles for authorizing users [admin, agent, customer]
     role: { type: String, enum: ['admin', 'agent', 'customer'], required: true },
     address: { type: String },
 });
