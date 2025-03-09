@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
 
@@ -8,9 +7,9 @@ import { validateForm } from '../utils/validateForm';
 const Register = () => {
 
   // role added to the formData state
-  // const [formData, setFormData] = useState({ name: '', email: '', password: '', role: '' });
-  
-  const {formData, errors, handleChange, validate } = useFormValition(
+
+  // form validation hook 
+  const {formData, errors, handleChange, isValidated } = useFormValition(
     {name: "", email: "", password: "", role: ""}, 
     validateForm
   );
@@ -22,8 +21,8 @@ const Register = () => {
     
     try {
 
-      // if the user input is validated 
-      if (validate()) {
+      // if all the user input is validated 
+      if (isValidated()) {
         await axiosInstance.post('/api/auth/register', formData);
         alert('Registration successful. Please log in.');
         navigate('/login');
