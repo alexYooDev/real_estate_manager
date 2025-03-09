@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
 
 const Register = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', role: '' });
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,31 +18,42 @@ const Register = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-20">
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded">
-        <h1 className="text-2xl font-bold mb-4 text-center">Register</h1>
+    <div className='max-w-md mx-auto mt-20'>
+      <form onSubmit={handleSubmit} className='p-6 bg-white rounded shadow-md'>
+        <h1 className='mb-4 text-2xl font-bold text-center'>Register</h1>
         <input
-          type="text"
-          placeholder="Name"
+          type='text'
+          placeholder='Name'
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
+          className='w-full p-2 mb-4 border rounded'
         />
         <input
-          type="email"
-          placeholder="Email"
+          type='email'
+          placeholder='Email'
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
+          className='w-full p-2 mb-4 border rounded'
         />
         <input
-          type="password"
-          placeholder="Password"
+          type='password'
+          placeholder='Password'
           value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
+          className='w-full p-2 mb-4 border rounded'
         />
-        <button type="submit" className="w-full bg-green-600 text-white p-2 rounded">
+        <label htmlFor="roles">I am signing up as: </label>
+        <select className="w-full p-2 mb-4 border rounded" name="roles" id="roles" onChange={(e) => setFormData({...formData, role: e.target.value})}>
+          <option value=""></option>
+          <option value="agent">Real estate agent</option>
+          <option value="customer">Customer</option>
+        </select>
+        <button
+          type='submit'
+          className='w-full p-2 text-white bg-green-600 rounded'
+        >
           Register
         </button>
       </form>
