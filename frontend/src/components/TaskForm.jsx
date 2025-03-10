@@ -18,6 +18,13 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
     }
   }, [editingTask]);
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -40,29 +47,32 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded mb-6">
-      <h1 className="text-2xl font-bold mb-4">{editingTask ? 'Your Form Name: Edit Operation' : 'Your Form Name: Create Operation'}</h1>
+    <form onSubmit={handleSubmit} className="p-6 mb-6 bg-white rounded shadow-md">
+      <h1 className="mb-4 text-2xl font-bold">{editingTask ? 'Your Form Name: Edit Operation' : 'Your Form Name: Create Operation'}</h1>
       <input
         type="text"
         placeholder="Title"
+        name="title"
         value={formData.title}
-        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-        className="w-full mb-4 p-2 border rounded"
+        onChange={handleChange}
+        className="w-full p-2 mb-4 border rounded"
       />
       <input
         type="text"
+        name="description"
         placeholder="Description"
         value={formData.description}
-        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-        className="w-full mb-4 p-2 border rounded"
+        onChange={handleChange}
+        className="w-full p-2 mb-4 border rounded"
       />
       <input
         type="date"
+        name='deadline'
         value={formData.deadline}
-        onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-        className="w-full mb-4 p-2 border rounded"
+        onChange={handleChange}
+        className="w-full p-2 mb-4 border rounded"
       />
-      <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
+      <button type="submit" className="w-full p-2 text-white bg-blue-600 rounded">
         {editingTask ? 'Update Button' : 'Create Button'}
       </button>
     </form>
