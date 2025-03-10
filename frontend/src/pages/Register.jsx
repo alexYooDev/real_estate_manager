@@ -1,48 +1,86 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
 
+import useFormValition from '../hooks/useFormValidation';
+import { validateForm } from '../utils/validateForm';
+
 const Register = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+
+  // role added to the formData state
+
+  // form validation hook 
+  const {formData, errors, handleChange, isValidated } = useFormValition(
+    {name: "", email: "", password: "", role: ""}, 
+    validateForm
+  );
+  
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
-      await axiosInstance.post('/api/auth/register', formData);
-      alert('Registration successful. Please log in.');
-      navigate('/login');
+
+      // if all the user input is validated 
+      if (isValidated()) {
+        await axiosInstance.post('/api/auth/register', formData);
+        alert('Registration successful. Please log in.');
+        navigate('/login');
+      }
     } catch (error) {
       alert('Registration failed. Please try again.');
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-20">
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded">
-        <h1 className="text-2xl font-bold mb-4 text-center">Register</h1>
+    <div className='max-w-md mx-auto mt-20'>
+      <form onSubmit={handleSubmit} className='p-6 bg-white rounded shadow-md'>
+        <h1 className='mb-4 text-2xl font-bold text-center'>Register</h1>
         <input
-          type="text"
-          placeholder="Name"
+          type='text'
+          placeholder='Name'
+          name='name'
           value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
+          onChange={handleChange}
+          className='w-full p-2 border rounded'
         />
+        {errors.name && <p className='text-sm text-red-500'>{errors.name}</p>}
         <input
-          type="email"
-          placeholder="Email"
+          type='email'
+          placeholder='Email'
+          name='email'
           value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
+          onChange={handleChange}
+          className='w-full p-2 mt-4 border rounded'
+          />
+        {errors.email && <p className='text-sm text-red-500'>{errors.email}</p>}
         <input
-          type="password"
-          placeholder="Password"
+          type='password'
+          name='password'
+          placeholder='Password'
           value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <button type="submit" className="w-full bg-green-600 text-white p-2 rounded">
+          onChange={handleChange}
+          className='w-full p-2 mt-4 border rounded'
+          />
+        {errors.password && <p className='text-sm text-red-500'>{errors.password}</p>}
+        <label htmlFor="role">I am signing up as: </label>
+
+        {/* select / option components to allow users to choose role */}
+        <select 
+          className="w-full p-2 my-2 border rounded" 
+          name="role" 
+          id="role"
+          onChange={handleChange}
+          >
+          <option value=""></option>
+          <option value="agent">Real estate agent</option>
+          <option value="customer">Customer</option>
+        </select>
+        {errors.role && <p className='text-sm text-red-500'>{errors.role}</p>}
+        <button
+          type='submit'
+          className='w-full p-2 text-white bg-green-600 rounded'
+          >
           Register
         </button>
       </form>
