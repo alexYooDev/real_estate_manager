@@ -2,7 +2,7 @@ const Property = require('../models/Property');
 const User = require('../models/User')
 
 const createProperty =  async (req, res) => {
-    const {title, description, price, location, type, bedrooms, bathrooms, agent, status } = req.body;
+    const {title, description, price, location, type, bedrooms, bathrooms, images, agent, status } = req.body;
     
     try {
 
@@ -19,7 +19,8 @@ const createProperty =  async (req, res) => {
             location, 
             type, 
             bedrooms, 
-            bathrooms, 
+            bathrooms,
+            images, 
             agent, 
             status
         });
@@ -33,6 +34,7 @@ const createProperty =  async (req, res) => {
             type: property.type,
             bedrooms: property.bedrooms,
             bathrooms: property.bathrooms,
+            images: property.images,
             agent: property.agent,
             status: property.status
         });
@@ -42,14 +44,20 @@ const createProperty =  async (req, res) => {
     }
 };
 
-// const getProperties = async (req, res) => {
-//     const {title, description, price, location, type, bedrooms, bathrooms, agent, status } = red.body;
+const getPropertiesAll = async (_, res) => {
+    const properties = await Property.find();
 
-//     try {
+    if (!properties) {
+        res.status(404).json({message: 'No properties found.'});
+    }
+
+    res.status(200).json(properties);
+
+    try {
         
-//     } catch(error) {
-//         res.status(500).json({message: error.message});
-//     }
-// }
+    } catch(error) {
+        res.status(500).json({message: error.message});
+    }
+}
 
-module.exports = {createProperty};
+module.exports = {createProperty, getPropertiesAll};

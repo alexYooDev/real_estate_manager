@@ -16,6 +16,9 @@ const Navbar = () => {
         Real Estate Manager
       </Link>
       <div>
+        <Link to='/view-property' className='mr-4'>
+          View Properties
+        </Link>
         {user ? (
           <>
             {user.role === 'agent' && (
@@ -23,9 +26,6 @@ const Navbar = () => {
                 Post New Property
               </Link>
             )}
-            <Link to='/view-property' className='mr-4'>
-              View Properties
-            </Link>
             <Link to='/profile' className='mr-4'>
               Profile
             </Link>
