@@ -19,10 +19,13 @@ const Navbar = () => {
         {user ? (
           <>
             {user.role === 'agent' && (
-              <Link to='/tasks' className='mr-4'>
-                CRUD
+              <Link to='/create-property' className='mr-4'>
+                Post New Property
               </Link>
             )}
+            <Link to='/view-property' className='mr-4'>
+              View Properties
+            </Link>
             <Link to='/profile' className='mr-4'>
               Profile
             </Link>

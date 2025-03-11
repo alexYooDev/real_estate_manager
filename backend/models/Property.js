@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('./User');
 
 const propertySchema = mongoose.Schema({
     title: {type: String, required: true},
@@ -14,4 +15,4 @@ const propertySchema = mongoose.Schema({
     createdAt: {type: Date, default: Date.now}
 });
 
-module.exports = propertySchema;
+module.exports = mongoose.model('Property', propertySchema);
