@@ -1,13 +1,27 @@
-const PropertyCard = ({property}) => {
+import { useNavigate } from 'react-router-dom';
+
+const PropertyCard = ({property, user}) => {
+
+  const navigate = useNavigate();
 
   const AUDollar = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'AUD'});
 
+  const handleClick = () => {
+    navigate('/view-detail/', {state: {property: property}})
+  };
+
     return (
-      <div className='overflow-hidden bg-white border rounded-lg shadow-lg'>
+      <div className='m-2 overflow-hidden bg-white border rounded-lg shadow-lg'>
         <div className='p-4'>
-          <h3 className='text-lg font-semibold'>{property.title}</h3>
-          <img src={property.image} alt={property.title} />
-          <p className='text-gray-600'>{property.location}</p>
+          <div className='my-1'>
+            <h3 className='text-lg font-semibold'>{property.title}</h3>
+          </div>
+          <div>
+            <p>{property.description}</p>
+          </div>
+          <div className='my-1'>
+            <p className='text-gray-600'>{property.location}</p>
+          </div>
           <div className='flex justify-between'>
             <div className='flex'>
               <span className='flex flex-row mr-3'>
@@ -37,9 +51,24 @@ const PropertyCard = ({property}) => {
               {AUDollar.format(property.price)}
             </span>
           </div>
-          <button className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-lg hover:bg-blue-600'>
-            View Details
-          </button>
+          <div className='flex justify-between'>
+            <button 
+              className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-lg hover:bg-blue-600'
+              onClick={handleClick}
+              >
+              View Details
+            </button>
+            {property.agent === user?.id && (
+              <div>
+                <button className='px-4 py-2 mt-4 text-white transition bg-red-500 rounded-l-lg hover:bg-red-600'>
+                  Delete
+                </button>
+                <button className='px-4 py-2 mt-4 text-white transition bg-orange-500 rounded-r-lg hover:bg-orange-600'>
+                  Update
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );

@@ -4,6 +4,8 @@ import axiosInstance from "../axiosConfig";
 import { useAuth } from "../context/AuthContext";
 
 const PropertiesFeed = () => {
+
+    const { user } = useAuth();
     
     const [properties, setProperties] = useState([]);
 
@@ -20,10 +22,9 @@ const PropertiesFeed = () => {
             
         }
         fetchProperties();
-    }, [properties])
-
+    }, [properties]);
     
-    return <PropertyList properties={properties}/>;
+    return <PropertyList properties={properties} user={user} />;
 }
 
 export default PropertiesFeed;
