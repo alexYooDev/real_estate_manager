@@ -8,7 +8,13 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     // Roles for authorizing users [admin, agent, customer] roles
     role: { type: String, enum: ['admin', 'agent', 'customer'], required: true },
-    address: { type: String },
+    
+    // customer-role field
+    savedProperties: [{type:mongoose.Types.ObjectId, ref: "Property"}],
+
+    // agent-role field
+    agency: {type: String},
+    propertiesListed: [{type: mongoose.Schema.Types.ObjectId, ref: "Property"}]
 });
 
 userSchema.pre('save', async function (next) {
