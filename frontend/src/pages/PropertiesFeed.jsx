@@ -1,5 +1,5 @@
 import PropertyList from "../components/PropertyList";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { useAuth } from "../context/AuthContext";
 
@@ -30,9 +30,9 @@ const PropertiesFeed = () => {
 
     console.log(properties);
 
-    const handleDeleteProperty = (propertyId) => {
+    const handleDeleteProperty = useCallback((propertyId) => {
       setProperties((prev) => prev.filter((prop) => prop._id !== propertyId));
-    };
+    }, []);
     
     return (
         <>
