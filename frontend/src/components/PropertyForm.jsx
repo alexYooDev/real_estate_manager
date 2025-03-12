@@ -47,7 +47,17 @@ const PropertyForm = ({property, isEditting}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axiosInstance.post('/api/create-property', formData);
+    try {
+      if (isEditting) {
+        // only update property post when updating
+        await axiosInstance.post(`/api/update-property/${formData._id}`, formData);
+      } else {
+        // only create new property post when not updating
+        await axiosInstance.post('/api/create-property', formData);
+      }
+    } catch(error) {
+      console.log(error);
+    }
     
     navigate('/view-property');
   };
