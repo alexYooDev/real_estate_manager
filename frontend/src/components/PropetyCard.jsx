@@ -13,7 +13,7 @@ const PropertyCard = ({property, user, onDelete}) => {
   });
 
   const handleClickDetail = () => {
-    navigate('/view-detail/', {state: {property: property}});
+    navigate('/view-detail', {state: {property: property}});
   };
 
   const handleClickDelete = async () => {
@@ -26,7 +26,7 @@ const PropertyCard = ({property, user, onDelete}) => {
   };
 
   const handleClickUpdate = () => {
-    return false;
+    navigate('/update-property', { state: {property: property} } );
   }
 
     return (

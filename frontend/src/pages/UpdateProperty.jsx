@@ -4,7 +4,6 @@ import { useLocation } from "react-router";
 import axiosInstance from "../axiosConfig";
 
 const UpdateProperty = () => {
-    const [currentProperty, setCurrentProperty] = useState({});
     const {state: { property }} = useLocation();
     const [isEditting, setIsEditting] = useState(true);
 
