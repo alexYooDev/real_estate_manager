@@ -60,4 +60,34 @@ const getPropertiesAll = async (_, res) => {
     }
 }
 
-module.exports = {createProperty, getPropertiesAll};
+const updateProperty = async (req, res) => {
+     
+     try {
+        const updatedProperty = await Property.replaceOne(
+          { _id: req.params.id },
+          req.body,
+          { new: true }
+        );
+
+        if (!updatedProperty) {
+            res.status(404).json({message: 'Property not found!'});
+        }
+        res.status(202).json(updatedProperty);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const deleteProperty = async (req,res) => {
+
+    const id = req.body._id
+    try {
+        const propertyToDelete = await Property.deleteOne({_id: id});
+
+        res.json({message: "property deleted"});
+    } catch(error) {
+        res.status(500).json({message: "delete failed"});
+    }
+}
+
+module.exports = {createProperty, getPropertiesAll, updateProperty, deleteProperty};

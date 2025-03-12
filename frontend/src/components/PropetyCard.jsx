@@ -1,14 +1,27 @@
 import { useNavigate } from 'react-router-dom';
 
-const PropertyCard = ({property, user}) => {
+const PropertyCard = ({property, user, onDelete}) => {
 
   const navigate = useNavigate();
 
-  const AUDollar = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'AUD'});
+  const AUDollar = new Intl.NumberFormat('en-US', {
+    style: 'currency', 
+    currency: 'AUD',
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  });
 
-  const handleClick = () => {
-    navigate('/view-detail/', {state: {property: property}})
+  const handleClickDetail = () => {
+    navigate('/view-detail/', {state: {property: property}});
   };
+
+  const handleClickUpdate = () => {
+    return false;
+  }
+
+  const handleClickDelete = async () => {
+    return false;
+  }
 
     return (
       <div className='m-2 overflow-hidden bg-white border rounded-lg shadow-lg'>
@@ -52,18 +65,18 @@ const PropertyCard = ({property, user}) => {
             </span>
           </div>
           <div className='flex justify-between'>
-            <button 
+            <button
               className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-lg hover:bg-blue-600'
-              onClick={handleClick}
-              >
+              onClick={handleClickDetail}
+            >
               View Details
             </button>
             {property.agent === user?.id && (
               <div>
-                <button className='px-4 py-2 mt-4 text-white transition bg-red-500 rounded-l-lg hover:bg-red-600'>
+                <button className='px-4 py-2 mt-4 text-white transition bg-red-500 rounded-l-lg hover:bg-red-600' onClick={handleClickDelete}>
                   Delete
                 </button>
-                <button className='px-4 py-2 mt-4 text-white transition bg-orange-500 rounded-r-lg hover:bg-orange-600'>
+                <button className='px-4 py-2 mt-4 text-white transition bg-orange-500 rounded-r-lg hover:bg-orange-600' onClick={handleClickUpdate}>
                   Update
                 </button>
               </div>

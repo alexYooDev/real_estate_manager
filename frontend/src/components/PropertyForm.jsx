@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
 import { useNavigate } from 'react-router-dom';
 
-const PropertyForm = () => {
+const PropertyForm = ({property, isEditting}) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   
@@ -20,8 +20,21 @@ const PropertyForm = () => {
     status: 'for sale',
   });
 
-  
-  
+    useEffect(() => {
+      setFormData(property || {
+    title: '',
+    description: '',
+    price: '',
+    location: '',
+    type: 'apartment',
+    bedrooms: '',
+    bathrooms: '',
+    images: [],
+    agent: user.id,
+    status: 'for sale',
+    });
+    }, [])
+
   const handleChange = (e) => {    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -33,7 +46,9 @@ const PropertyForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axiosInstance.post('/api/create-property', formData);
+
+    await axiosInstance.post('/api/create-property', formData);
+
     navigate('/view-property');
   };
 
