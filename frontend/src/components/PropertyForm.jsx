@@ -56,18 +56,21 @@ const PropertyForm = ({property, isEditting}) => {
     <form onSubmit={handleSubmit} className="max-w-3xl p-6 mx-auto border border-gray-300 rounded-lg bg-gray-50">
       <h2 className="mb-6 text-2xl font-semibold">Add New Property</h2>
 
-      <label className="block mb-2 text-sm font-medium">Title:</label>
+      <label htmlFor='title' className="block mb-2 text-sm font-medium">Title:</label>
       <input
         type="text"
         name="title"
+        id='title'
         value={formData.title}
         onChange={handleChange}
         className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         required
       />
 
-      <label className="block mb-2 text-sm font-medium">Description:</label>
+      <label htmlFor='description' className="block mb-2 text-sm font-medium">Description:</label>
       <textarea
+        id='description'
+        type='text'
         name="description"
         value={formData.description}
         onChange={handleChange}
@@ -75,9 +78,10 @@ const PropertyForm = ({property, isEditting}) => {
         required
       />
 
-      <label className="block mb-2 text-sm font-medium">Price:</label>
+      <label htmlFor='price' className="block mb-2 text-sm font-medium">Price:</label>
       <input
         type="number"
+        id='pricce'
         name="price"
         value={formData.price}
         onChange={handleChange}
@@ -85,9 +89,10 @@ const PropertyForm = ({property, isEditting}) => {
         required
       />
 
-      <label className="block mb-2 text-sm font-medium">Location:</label>
+      <label htmlFor='location' className="block mb-2 text-sm font-medium">Location:</label>
       <input
         type="text"
+        id='location'
         name="location"
         value={formData.location}
         onChange={handleChange}
@@ -95,9 +100,10 @@ const PropertyForm = ({property, isEditting}) => {
         required
       />
 
-      <label className="block mb-2 text-sm font-medium">Type:</label>
+      <label htmlFor='type' className="block mb-2 text-sm font-medium">Type:</label>
       <select
         name="type"
+        id='type'
         value={formData.type}
         onChange={handleChange}
         className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -108,9 +114,10 @@ const PropertyForm = ({property, isEditting}) => {
         <option value="office">Office</option>
       </select>
 
-      <label className="block mb-2 text-sm font-medium">Bedrooms:</label>
+      <label htmlFor='bedrooms' className="block mb-2 text-sm font-medium">Bedrooms:</label>
       <input
         type="number"
+        id='bedrooms'
         name="bedrooms"
         value={formData.bedrooms}
         onChange={handleChange}
@@ -118,9 +125,10 @@ const PropertyForm = ({property, isEditting}) => {
         required
       />
 
-      <label className="block mb-2 text-sm font-medium">Bathrooms:</label>
+      <label htmlFor='bathrooms' className="block mb-2 text-sm font-medium">Bathrooms:</label>
       <input
         type="number"
+        id='bathrooms'
         name="bathrooms"
         value={formData.bathrooms}
         onChange={handleChange}
@@ -128,9 +136,10 @@ const PropertyForm = ({property, isEditting}) => {
         required
       />
 
-      <label className="block mb-2 text-sm font-medium">Images:</label>
+      <label htmlFor='images' className="block mb-2 text-sm font-medium">Images:</label>
       <input
         type="file"
+        id='images'
         name="images"
         onChange={handleImageChange}
         className="w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none"

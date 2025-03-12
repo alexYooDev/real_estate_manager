@@ -69,7 +69,7 @@ const PropertyCard = ({property, user, onDelete}) => {
             </button>
             {property.agent === user?.id && (
               <div>
-                <button className='px-4 py-2 mt-4 text-white transition bg-red-500 rounded-l-lg hover:bg-red-600' onClick={() => { onDelete(property._id)}}>
+                <button className='px-4 py-2 mt-4 text-white transition bg-red-500 rounded-l-lg hover:bg-red-600' onClick={() => {onDelete(property._id)}}>
                   Delete
                 </button>
                 <button className='px-4 py-2 mt-4 text-white transition bg-orange-500 rounded-r-lg hover:bg-orange-600' onClick={handleClickUpdate}>

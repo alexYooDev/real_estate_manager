@@ -8,32 +8,41 @@ const PropertiesFeed = () => {
     const { user } = useAuth();
     
     const [properties, setProperties] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
 
         const fetchProperties = async () => {
 
+            setIsLoading(true);
             try {
                 const response = await axiosInstance.get('/api/view-all-property');
                 setProperties(response.data);
+                
             } catch (error) {
                 console.log('No property to show');
             }
             
         }
         fetchProperties();
-    }, [properties]);
+        setIsLoading(false);
+    }, []);
+
+    console.log(properties);
 
     const handleDeleteProperty = (propertyId) => {
       setProperties((prev) => prev.filter((prop) => prop._id !== propertyId));
     };
     
     return (
-      <PropertyList
-        properties={properties}
-        user={user}
-        onDelete={handleDeleteProperty}
-      />
+        <>
+        {isLoading && <p>Loading...</p>}
+        <PropertyList
+            properties={properties}
+            user={user}
+            onDelete={handleDeleteProperty}
+            />
+        </>
     );
 }
 
