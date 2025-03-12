@@ -23,8 +23,18 @@ const PropertiesFeed = () => {
         }
         fetchProperties();
     }, [properties]);
+
+    const handleDeleteProperty = (propertyId) => {
+      setProperties((prev) => prev.filter((prop) => prop._id !== propertyId));
+    };
     
-    return <PropertyList properties={properties} user={user} />;
+    return (
+      <PropertyList
+        properties={properties}
+        user={user}
+        onDelete={handleDeleteProperty}
+      />
+    );
 }
 
 export default PropertiesFeed;

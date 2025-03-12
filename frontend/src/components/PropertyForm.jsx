@@ -48,7 +48,7 @@ const PropertyForm = ({property, isEditting}) => {
     e.preventDefault();
 
     await axiosInstance.post('/api/create-property', formData);
-
+    
     navigate('/view-property');
   };
 
