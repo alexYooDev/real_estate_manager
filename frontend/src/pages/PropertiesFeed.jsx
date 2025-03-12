@@ -28,10 +28,9 @@ const PropertiesFeed = () => {
         setIsLoading(false);
     }, []);
 
-    console.log(properties);
-
     const handleDeleteProperty = useCallback((propertyId) => {
       setProperties((prev) => prev.filter((prop) => prop._id !== propertyId));
+
     }, []);
     
     return (
