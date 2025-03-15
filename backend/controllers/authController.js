@@ -79,18 +79,22 @@ const getProfile = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
     try {
+      
         const user = await User.findById(req.user.id);
+
         if (!user) return res.status(404).json({ message: 'User not found' });
 
-        const { name, email, university, address } = req.body;
+        const { name, email, agency, address } = req.body;
         user.name = name || user.name;
         user.email = email || user.email;
-        user.university = university || user.university;
+        user.agency = agency || user.agency;
         user.address = address || user.address;
 
         const updatedUser = await user.save();
-        res.json({ id: updatedUser.id, name: updatedUser.name, email: updatedUser.email, university: updatedUser.university, address: updatedUser.address, token: generateToken(updatedUser.id) });
-    } catch (error) {
+        
+        res.json({ id: updatedUser.id, name: updatedUser.name, email: updatedUser.email, agency: updatedUser.agency, address: updatedUser.address, token: generateToken(updatedUser.id) });
+    
+      } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
