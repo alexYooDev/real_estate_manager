@@ -5,7 +5,7 @@ const propertySchema = mongoose.Schema({
     title: {type: String, required: true},
     description: {type: String, required: true},
     price: {type: Number, required: true},
-    status: {type: String, enum: ['for sale', 'pending', 'sold'], required:true},
+    status: {type: String, enum: ['for sale', 'for rent', 'pending', 'sold'], required:true},
     location: {type: String, required: true},
     features: [{type: String}],
     type: {type: String, enum: ['apartment', 'house', 'office'], required: true },

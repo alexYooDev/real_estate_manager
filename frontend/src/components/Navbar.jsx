@@ -10,6 +10,7 @@ const Navbar = () => {
     navigate('/login');
   };
 
+
   return (
     <nav className='flex items-center justify-between p-4 text-white bg-blue-600'>
       <Link to='/' className='text-2xl font-bold'>

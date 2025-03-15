@@ -63,41 +63,45 @@ const FilterControl = ({filters, onChange, setFilters}) => {
             Price Range
           </label>
           <div className='flex'>
-            <div className='text-sm'>
-              <span>{Dollar.format(filters.price[0])}</span>
+            <div>
+              <div className='text-sm'>
+                <span>{Dollar.format(filters.price[0])}</span>
+              </div>
+              <input
+                type='range'
+                name='priceRange'
+                min='0'
+                max='10000000'
+                step='1000'
+                value={filters.price[0]}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    price: [Number(e.target.value), prev.price[1]],
+                  }))
+                }
+                className='w-full'
+              />
             </div>
-            <input
-              type='range'
-              name='priceRange'
-              min='0'
-              max='10000000'
-              step='1000'
-              value={filters.price[0]}
-              onChange={(e) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  price: [Number(e.target.value), prev.price[1]],
-                }))
-              }
-              className='w-full'
-            />
-            <input
-              type='range'
-              name='priceRange'
-              min='0'
-              max='10000000'
-              step='1000'
-              value={filters.price[1]}
-              onChange={(e) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  price: [prev.price[0], Number(e.target.value)],
-                }))
-              }
-              className='w-full'
-            />
-            <div className='text-sm'>
-              <span>{Dollar.format(filters.price[1])}</span>
+            <div>
+              <div className='text-sm'>
+                <span>{Dollar.format(filters.price[1])}</span>
+              </div>
+              <input
+                type='range'
+                name='priceRange'
+                min='0'
+                max='10000000'
+                step='1000'
+                value={filters.price[1]}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    price: [prev.price[0], Number(e.target.value)],
+                  }))
+                }
+                className='w-full'
+              />
             </div>
           </div>
         </div>

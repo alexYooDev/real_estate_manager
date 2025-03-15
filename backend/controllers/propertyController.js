@@ -2,7 +2,7 @@ const Property = require('../models/Property');
 const User = require('../models/User')
 
 const createProperty =  async (req, res) => {
-    const {title, description, price, location, type, bedrooms, bathrooms, images, agent, status } = req.body;
+    const {title, description, price, location, type, bedrooms, bathrooms, images, agent, status} = req.body;
     
     try {
 
@@ -24,6 +24,10 @@ const createProperty =  async (req, res) => {
             agent, 
             status
         });
+        
+
+        // update corresponding agent's property list
+        await User.findByIdAndUpdate(agent, { $push: {propertiesListed: property._id}}, {new: true})
         
         res.status(201).json({
             id: property.id, 

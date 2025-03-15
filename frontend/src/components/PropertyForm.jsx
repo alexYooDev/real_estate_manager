@@ -125,25 +125,28 @@ const PropertyForm = ({property, isEditting}) => {
         className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
         required
       />
-      {isEditting && (
-        <div>
-          <label htmlFor='status' className='block mb-2 text-sm font-medium'>
-            Status:
-          </label>
-          <select
-            name='status'
-            id='status'
-            value={formData.status}
-            onChange={handleChange}
-            className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-            required
-          >
-            <option value='for sale'>For Sale</option>
-            <option value='pending'>Pending</option>
-            <option value='sold'>Sold</option>
-          </select>
-        </div>
-      )}
+      <div>
+        <label htmlFor='status' className='block mb-2 text-sm font-medium'>
+          Status:
+        </label>
+        <select
+          name='status'
+          id='status'
+          value={formData.status}
+          onChange={handleChange}
+          className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+          required
+        >
+          <option value='for sale'>For Sale</option>
+          <option value='for rent'>For Rent</option>
+          {isEditting && (
+            <>
+              <option value='pending'>Pending</option>
+              <option value='sold'>Sold</option>
+            </>
+          )}
+        </select>
+      </div>
       <label htmlFor='price' className='block mb-2 text-sm font-medium'>
         Price:
       </label>

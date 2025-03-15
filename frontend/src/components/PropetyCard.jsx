@@ -35,7 +35,7 @@ const PropertyCard = ({property, user, onDelete}) => {
   }
 
     return (
-      <div className='m-2 overflow-hidden bg-white border rounded-lg shadow-lg'>
+      <div className='m-4 overflow-hidden bg-white border rounded-lg shadow-lg'>
         <div className='p-4'>
           <div className='my-1'>
             <h3 className='text-lg font-semibold'>{property.title}</h3>
@@ -53,6 +53,10 @@ const PropertyCard = ({property, user, onDelete}) => {
               </span>
             ) : property.status === 'sold' ? (
               <span className='bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-300'>
+                {property.status.toUpperCase()}
+              </span>
+            ) : property.status === 'for rent' ? (
+              <span className='bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-700 dark:text-blue-300'>
                 {property.status.toUpperCase()}
               </span>
             ) : (
