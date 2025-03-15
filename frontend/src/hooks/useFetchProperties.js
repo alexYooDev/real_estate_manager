@@ -3,8 +3,7 @@ import axiosInstance from '../axiosConfig';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const useFetchProperties = () => {
-
+const useFetchProperties = ({pathname}) => {
 
     const {properties, setProperties} = useProperties();
 
@@ -16,7 +15,7 @@ const useFetchProperties = () => {
             console.log(isSearch)
             return;
         }
-        
+
         const fetchProperties = async () => {
 
             try {

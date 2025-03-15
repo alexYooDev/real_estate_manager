@@ -20,15 +20,6 @@ const PropertyDetail = () => {
       fetchAgentProfile();
     }, [])
 
-    // Mock data of agent 
-    // const agent =  {
-    //   name: "John Doe",
-    //   firm: "Brisbane Real Estate",
-    //   email: "john.doe@example.com",
-    //   avatar: "https://source.unsplash.com/100x100/?man",
-    // }
-
-
     return (
       <div className='flex justify-center min-h-screen p-6 bg-gray-100'>
         <div className='w-full max-w-4xl overflow-hidden bg-white rounded-lg shadow-lg'>
@@ -53,8 +44,8 @@ const PropertyDetail = () => {
                 <span>{property.bathrooms} Bathrooms</span>
               </div>
             </div>
-            <div>
-              <h3>Features</h3>
+            <div className='m-4'>
+              <h3 className='font-bold'>Features</h3>
               <ul>
                 {property.features.map((feat, i) => (<li key={i}>{feat}</li>))}
               </ul>

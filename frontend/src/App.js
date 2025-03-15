@@ -8,6 +8,7 @@ import PropertiesFeed from './pages/PropertiesFeed';
 import PropertyDetail from './pages/PropertyDetail';
 import Main from './pages/Main';
 import UpdateProperty from './pages/UpdateProperty';
+import MyPropertyPosts from './pages/MyPropertyPosts';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/view-detail" element={<PropertyDetail/>}/>
         <Route path="/create-property" element={<CreateProperties/>} />
         <Route path="/update-property" element={<UpdateProperty/>}/>
+        <Route path="/my-post" element={<MyPropertyPosts/>}/>
       </Routes>
     </Router>
   );

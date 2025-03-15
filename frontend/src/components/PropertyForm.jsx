@@ -23,24 +23,33 @@ const PropertyForm = ({property, isEditting}) => {
     status: '',
   });
 
-    useEffect(() => {
-      if (property) {
-        setFeatures(property.features);
-      }
-      
-      setFormData(property || {
-    title: '',
-    description: '',
-    price: '',
-    features: features,
-    location: '',
-    type: 'apartment',
-    bedrooms: '',
-    bathrooms: '',
-    agent: user.id,
-    status: 'for sale',
-    });
-    }, [])
+
+  // this runs only when the components mounts 
+  useEffect(() => {
+    if (property) {
+      setFeatures(property.features);
+    }
+    
+    setFormData(property || {
+  title: '',
+  description: '',
+  price: '',
+  features: features,
+  location: '',
+  type: 'apartment',
+  bedrooms: '',
+  bathrooms: '',
+  agent: user.id,
+  status: 'for sale',
+  });
+
+  }, [])
+
+
+  // this runs every time features state updates
+  useEffect(() => {
+    setFormData((prev) => ({...prev, features}))
+  }, [features])
 
   const handleChange = (e) => {    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -58,11 +67,10 @@ const PropertyForm = ({property, isEditting}) => {
       setFeatures((prev) => [...prev, feature]); // Add new feature to the array
       setFeature(''); // Clear input field
     }
-    setFormData((prev) => ({ ...prev,  features }));
   };
 
   const removeFeature = (index) => {
-    setFeatures(features.filter((_, i) => i !== index));
+    setFeatures((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {

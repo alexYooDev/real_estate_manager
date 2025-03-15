@@ -66,7 +66,7 @@ const getPropertiesAll = async (_, res) => {
 
 const searchProperty = async (req, res) => {
     
-    const { price, location, type, bedrooms, bathrooms, status} = req.query;
+    const { price, location, type, bedrooms, bathrooms, status, agent} = req.query;
 
     let filter = {}
 
@@ -80,6 +80,7 @@ const searchProperty = async (req, res) => {
     if (bedrooms) filter.bedrooms = bedrooms;
     if (bathrooms) filter.bathrooms = bathrooms;
     if (status !== '') filter.status = status;
+    if (agent) filter.agent = agent;
 
     if (minPrice || maxPrice) {
         filter.price = {};
