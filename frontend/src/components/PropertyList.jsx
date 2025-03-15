@@ -1,9 +1,13 @@
 import PropertyCard from "./PropetyCard";
+import { useProperties } from "../context/PropertyContext";
 
-const PropertyList = ({properties, user, onDelete}) => {
+const PropertyList = ({user, onDelete}) => {
+
+    const {properties} = useProperties();
+
     return (
         <div>
-            {properties.map((property) => <PropertyCard property={property} user={user} onDelete={onDelete} />)}
+            {properties.map((property) => <PropertyCard key={property._id} property={property} user={user} onDelete={onDelete} />)}
         </div>
     )
 };

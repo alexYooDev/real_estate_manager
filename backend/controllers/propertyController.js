@@ -58,10 +58,42 @@ const getPropertiesAll = async (_, res) => {
     } catch(error) {
         res.status(500).json({message: error.message});
     }
+};
+
+const searchProperty = async (req, res) => {
+    
+    const { price, location, type, bedrooms, bathrooms, status} = req.query;
+
+    let filter = {}
+
+
+    let [minPrice, maxPrice] = price.split(",");
+    minPrice = Number(minPrice);
+    maxPrice = Number(maxPrice);
+
+    if (location !== '') filter.location = {$regex: location, $options: "i"};
+    if (type) filter.type = type;
+    if (bedrooms) filter.bedrooms = bedrooms;
+    if (bathrooms) filter.bathrooms = bathrooms;
+    if (status !== '') filter.status = status;
+
+    if (minPrice || maxPrice) {
+        filter.price = {};
+        if (minPrice) filter.price.$gte = Number(minPrice);
+        if (maxPrice) filter.price.$lte = Number(maxPrice);
+    }
+
+    try {
+        const searchedProperty = await Property.find(filter);
+        console.log(searchedProperty);
+        res.status(201).json(searchedProperty);
+    } catch(error) {
+        res.status(500).json({message: error.message});
+    }
 }
 
 const updateProperty = async (req, res) => {
-     
+
      try {
         const updatedProperty = await Property.replaceOne(
           { _id: req.params.id },
@@ -71,7 +103,8 @@ const updateProperty = async (req, res) => {
 
         if (!updatedProperty) {
             res.status(404).json({message: 'Property not found!'});
-        }
+        } 
+        
         res.status(202).json(updatedProperty);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -90,4 +123,4 @@ const deleteProperty = async (req,res) => {
     }
 }
 
-module.exports = {createProperty, getPropertiesAll, updateProperty, deleteProperty};
+module.exports = {createProperty, getPropertiesAll, searchProperty, updateProperty, deleteProperty};

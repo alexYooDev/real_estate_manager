@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import Properties from './pages/Properties';
+import CreateProperties from './pages/CreateProperties';
 import PropertiesFeed from './pages/PropertiesFeed';
 import PropertyDetail from './pages/PropertyDetail';
 import Main from './pages/Main';
@@ -20,7 +20,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/view-property" element={<PropertiesFeed/>} />
         <Route path="/view-detail" element={<PropertyDetail/>}/>
-        <Route path="/create-property" element={<Properties />} />
+        <Route path="/create-property" element={<CreateProperties/>} />
         <Route path="/update-property" element={<UpdateProperty/>}/>
       </Routes>
     </Router>

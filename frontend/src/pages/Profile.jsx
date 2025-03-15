@@ -57,13 +57,20 @@ const Profile = () => {
     <div className="max-w-md mx-auto mt-20">
       <form onSubmit={handleSubmit} className="p-6 bg-white rounded shadow-md">
         <h1 className="mb-4 text-2xl font-bold text-center">Your Profile</h1>
+        <label htmlFor="name">
+          Name
+        </label>
         <input
+          id='name'
           type="text"
           placeholder="Name"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           className="w-full p-2 mb-4 border rounded"
         />
+        <label htmlFor="email">
+          Email
+        </label>
         <input
           type="email"
           placeholder="Email"
@@ -71,6 +78,9 @@ const Profile = () => {
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           className="w-full p-2 mb-4 border rounded"
         />
+        <label htmlFor="agency">
+          Agency
+        </label>
         <input
           type="text"
           placeholder="Agency"

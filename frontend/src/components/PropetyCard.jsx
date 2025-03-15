@@ -17,11 +17,16 @@ const PropertyCard = ({property, user, onDelete}) => {
   };
 
   const handleClickDelete = async () => {
-    try {
-      await axiosInstance.post('/api/delete-property', {_id: property._id});
-      onDelete(property._id);
-    } catch(error) {
-      console.log(error);
+
+    const proceed = window.confirm("Do you really want to delete this property post?");
+
+    if (proceed) {
+      try {
+          await axiosInstance.post('/api/delete-property', {_id: property._id});
+          onDelete(property._id);
+        } catch(error) {
+            console.log(error);
+          }
     }
   };
 
@@ -40,6 +45,21 @@ const PropertyCard = ({property, user, onDelete}) => {
           </div>
           <div className='my-1'>
             <p className='text-gray-600'>{property.location}</p>
+          </div>
+          <div className='my-1'>
+            {property.status === 'for sale' ? (
+              <span className='bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300'>
+                {property.status.toUpperCase()}
+              </span>
+            ) : property.status === 'sold' ? (
+              <span className='bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-300'>
+                {property.status.toUpperCase()}
+              </span>
+            ) : (
+              <span className='bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300'>
+                {property.status.toUpperCase()}
+              </span>
+            )}
           </div>
           <div className='flex justify-between'>
             <div className='flex'>
@@ -79,10 +99,16 @@ const PropertyCard = ({property, user, onDelete}) => {
             </button>
             {property.agent === user?.id && (
               <div>
-                <button className='px-4 py-2 mt-4 text-white transition bg-red-500 rounded-l-lg hover:bg-red-600' onClick={handleClickDelete}>
+                <button
+                  className='px-4 py-2 mt-4 text-white transition bg-red-500 rounded-l-lg hover:bg-red-600'
+                  onClick={handleClickDelete}
+                >
                   Delete
                 </button>
-                <button className='px-4 py-2 mt-4 text-white transition bg-orange-500 rounded-r-lg hover:bg-orange-600' onClick={handleClickUpdate}>
+                <button
+                  className='px-4 py-2 mt-4 text-white transition bg-orange-500 rounded-r-lg hover:bg-orange-600'
+                  onClick={handleClickUpdate}
+                >
                   Update
                 </button>
               </div>

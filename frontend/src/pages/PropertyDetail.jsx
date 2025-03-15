@@ -18,7 +18,7 @@ const PropertyDetail = () => {
         }
       }
       fetchAgentProfile();
-    }, [agent])
+    }, [])
 
     // Mock data of agent 
     // const agent =  {
@@ -28,10 +28,10 @@ const PropertyDetail = () => {
     //   avatar: "https://source.unsplash.com/100x100/?man",
     // }
 
+
     return (
       <div className='flex justify-center min-h-screen p-6 bg-gray-100'>
         <div className='w-full max-w-4xl overflow-hidden bg-white rounded-lg shadow-lg'>
-          {/* Image Carousel */}
 
           {/* Property Info */}
           <div className='p-6'>
@@ -53,7 +53,12 @@ const PropertyDetail = () => {
                 <span>{property.bathrooms} Bathrooms</span>
               </div>
             </div>
-
+            <div>
+              <h3>Features</h3>
+              <ul>
+                {property.features.map((feat, i) => (<li key={i}>{feat}</li>))}
+              </ul>
+            </div>
             <div className='flex items-center mt-4 text-gray-700'>
               <span className='text-2xl font-semibold'>
                 ${property.price.toLocaleString()}

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import PropertyForm from "../components/PropertyForm";
 import { useLocation } from "react-router";
-import axiosInstance from "../axiosConfig";
 
 const UpdateProperty = () => {
     const {state: { property }} = useLocation();

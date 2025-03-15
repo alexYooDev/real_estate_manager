@@ -1,47 +1,25 @@
 import PropertyList from "../components/PropertyList";
-import { useCallback, useEffect, useState } from "react";
-import axiosInstance from "../axiosConfig";
+import { useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useProperties } from "../context/PropertyContext";
+import useFetchProperties from "../hooks/useFetchProperties";
 
 const PropertiesFeed = () => {
 
     const { user } = useAuth();
-    
-    const [properties, setProperties] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const {setProperties} = useProperties();
 
-    useEffect(() => {
-
-        const fetchProperties = async () => {
-
-            setIsLoading(true);
-            try {
-                const response = await axiosInstance.get('/api/view-all-property');
-                setProperties(response.data);
-                
-            } catch (error) {
-                console.log('No property to show');
-            }
-            
-        }
-        fetchProperties();
-        setIsLoading(false);
-    }, []);
+    useFetchProperties();
 
     const handleDeleteProperty = useCallback((propertyId) => {
       setProperties((prev) => prev.filter((prop) => prop._id !== propertyId));
-
     }, []);
     
     return (
-        <>
-        {isLoading && <p>Loading...</p>}
         <PropertyList
-            properties={properties}
             user={user}
             onDelete={handleDeleteProperty}
             />
-        </>
     );
 }
 
