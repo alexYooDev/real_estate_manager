@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropertyForm from "../components/PropertyForm";
 import { useLocation } from "react-router";
 

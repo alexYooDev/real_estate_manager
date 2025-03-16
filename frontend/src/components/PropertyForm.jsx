@@ -52,6 +52,7 @@ const PropertyForm = ({property, isEditting}) => {
   }, [features])
 
   const handleChange = (e) => {    const { name, value } = e.target;
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -111,6 +112,7 @@ const PropertyForm = ({property, isEditting}) => {
         type='text'
         name='title'
         id='title'
+        placeholder='Enter your title'
         value={formData.title}
         onChange={handleChange}
         className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
@@ -124,6 +126,7 @@ const PropertyForm = ({property, isEditting}) => {
         id='description'
         type='text'
         name='description'
+        placeholder='Enter your description'
         value={formData.description}
         onChange={handleChange}
         className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
@@ -176,6 +179,7 @@ const PropertyForm = ({property, isEditting}) => {
         type='text'
         id='location'
         name='location'
+        placeholder='Enter the location'
         value={formData.location}
         onChange={handleChange}
         className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
@@ -187,8 +191,9 @@ const PropertyForm = ({property, isEditting}) => {
       </label>
       <input
         type='number'
-        id='pricce'
+        id='price'
         name='price'
+        placeholder='Enter the Price'
         value={formData.price}
         onChange={handleChange}
         className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'

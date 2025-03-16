@@ -1,8 +1,8 @@
 import { useAuth } from "../context/AuthContext";
-import PropertyList from "../components/PropertyList";
 import { useEffect } from "react";
-import axiosInstance from "../axiosConfig";
 import { useProperties } from "../context/PropertyContext";
+import PropertyList from "../components/PropertyList";
+import axiosInstance from "../axiosConfig";
 
 const MyPropertyPosts = () => {
     

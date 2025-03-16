@@ -8,7 +8,7 @@ const FilterControl = ({filters, onChange, setFilters}) => {
     });
 
     return (
-      <div className='flex flex-wrap justify-center gap-4 mb-6'>
+      <div className='flex flex-wrap justify-center gap-4'>
         <select
           name='type'
           value={filters.type}
@@ -20,7 +20,6 @@ const FilterControl = ({filters, onChange, setFilters}) => {
           <option value='apartment'>Apartment</option>
           <option value='office'>Office</option>
         </select>
-
         <select
           name='bathrooms'
           value={filters.bathrooms}
@@ -58,13 +57,13 @@ const FilterControl = ({filters, onChange, setFilters}) => {
           <option value='For Rent'>For Rent</option>
           <option value='Sold'>Sold</option>
         </select>
-        <div className='w-full sm:w-auto'>
-          <label htmlFor='priceRange' className='block text-sm font-medium'>
+        <div className='w-full p-2 bg-white border rounded-md shadow-sm sm:w-auto'>
+          <label htmlFor='priceRange' className='block text-sm font-medium text-center'>
             Price Range
           </label>
           <div className='flex'>
             <div>
-              <div className='text-sm'>
+              <div className='text-sm '>
                 <span>{Dollar.format(filters.price[0])}</span>
               </div>
               <input

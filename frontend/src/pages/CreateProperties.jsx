@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import PropertyForm from '../components/PropertyForm';
 
 const Properties = () => {

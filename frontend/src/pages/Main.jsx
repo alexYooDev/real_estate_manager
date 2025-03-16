@@ -9,10 +9,19 @@ const Main = () => {
   
   useFetchProperties(pathname);
 
-
   return (
-    <div>
-      <SearchBar />
+    <div className='bg-gradient-to-r from-blue-500 to-teal-100'>
+      <div className='flex flex-col text-center justify-evenly h-dvh'>
+        <div className='flex flex-col items-center justify-center'>
+          <h1 className='mb-2 text-4xl'>
+            Connecting Buyers and Agents — All in One Place.
+          </h1>
+          <p className='text-lg'>
+            Buy, sell, or manage real estate effortlessly.
+          </p>
+        </div>
+        <SearchBar />
+      </div>
     </div>
   );
 };

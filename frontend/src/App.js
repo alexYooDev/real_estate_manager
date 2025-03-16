@@ -9,6 +9,7 @@ import PropertyDetail from './pages/PropertyDetail';
 import Main from './pages/Main';
 import UpdateProperty from './pages/UpdateProperty';
 import MyPropertyPosts from './pages/MyPropertyPosts';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/update-property" element={<UpdateProperty/>}/>
         <Route path="/my-post" element={<MyPropertyPosts/>}/>
       </Routes>
+      <Footer/>
     </Router>
   );
 }

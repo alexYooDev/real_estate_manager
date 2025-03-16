@@ -16,6 +16,14 @@ const PropertyCard = ({property, user, onDelete}) => {
     navigate('/view-detail', {state: {property: property}});
   };
 
+  // const handleClickSave = async () => {
+  //   try {
+
+  //   } catch(error) {
+
+  //   }
+  // };
+
   const handleClickDelete = async () => {
 
     const proceed = window.confirm("Do you really want to delete this property post?");
@@ -90,17 +98,39 @@ const PropertyCard = ({property, user, onDelete}) => {
                 {property.bathrooms}
               </span>
             </div>
+
             <span className='text-xl font-bold text-blue-600'>
               {AUDollar.format(property.price)}
             </span>
           </div>
+          {property.features.length > 0 && (
+            <div>
+              <p className='font-semibold'>Key features</p>
+              <ul className='flex'>
+                {property.features?.map((feat) => (
+                  <li className='m-1 list-none'>✅ {feat}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className='flex justify-between'>
-            <button
-              className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-lg hover:bg-blue-600'
-              onClick={handleClickDetail}
-            >
-              View Details
-            </button>
+            <div>
+              <button
+                className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-l-lg hover:bg-blue-600'
+                onClick={handleClickDetail}
+              >
+                View Details
+              </button>
+              {/* show only when it is not my created post */}
+              { property.agent !== user.id && 
+                  <button className='px-4 py-2 mt-4 text-white transition bg-blue-500 hover:bg-blue-600'>
+                    Contact Agent
+                  </button>
+              }
+              <button className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-r-lg hover:bg-blue-600'>
+                Save Post
+              </button>
+            </div>
             {property.agent === user?.id && (
               <div>
                 <button

@@ -1,8 +1,8 @@
 import PropertyList from "../components/PropertyList";
-import { useAuth } from "../context/AuthContext";
 import useFetchProperties from "../hooks/useFetchProperties";
 import { useLocation } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
+import { useAuth } from "../context/AuthContext";
 import { useProperties } from "../context/PropertyContext";
 
 const PropertiesFeed = () => {
@@ -14,13 +14,13 @@ const PropertiesFeed = () => {
     useFetchProperties(pathname);
 
     return (
-      <>
+      <div className="min-h-screen">
         <SearchBar/>
         <PropertyList
           properties={properties}
           user={user}
         />
-      </>
+      </div>
     );
 }
 
