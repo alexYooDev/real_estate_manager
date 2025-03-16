@@ -18,20 +18,20 @@ const TaskList = ({ tasks, setTasks, setEditingTask }) => {
   return (
     <div>
       {tasks.map((task) => (
-        <div key={task._id} className="bg-gray-100 p-4 mb-4 rounded shadow">
+        <div key={task._id} className="p-4 mb-4 bg-gray-100 rounded shadow">
           <h2 className="font-bold">{task.title}</h2>
           <p>{task.description}</p>
           <p className="text-sm text-gray-500">Deadline: {new Date(task.deadline).toLocaleDateString()}</p>
           <div className="mt-2">
             <button
               onClick={() => setEditingTask(task)}
-              className="mr-2 bg-yellow-500 text-white px-4 py-2 rounded"
+              className="px-4 py-2 mr-2 text-white bg-yellow-500 rounded"
             >
               Edit
             </button>
             <button
               onClick={() => handleDelete(task._id)}
-              className="bg-red-500 text-white px-4 py-2 rounded"
+              className="px-4 py-2 text-white bg-red-500 rounded"
             >
               Delete
             </button>

@@ -9,15 +9,17 @@ const Register = () => {
   // role added to the formData state
 
   // form validation hook 
-  const {formData, errors, handleChange, isValidated } = useFormValition(
-    {name: "", email: "", password: "", role: ""}, 
+  const {formData, errors, handleChange, isValidated, isAgent } = useFormValition(
+    {name: "", email: "", password: "", agency: "", role: ""}, 
     validateForm
   );
-  
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log(formData);
     
     try {
 
@@ -52,7 +54,7 @@ const Register = () => {
           value={formData.email}
           onChange={handleChange}
           className='w-full p-2 mt-4 border rounded'
-          />
+        />
         {errors.email && <p className='text-sm text-red-500'>{errors.email}</p>}
         <input
           type='password'
@@ -61,26 +63,41 @@ const Register = () => {
           value={formData.password}
           onChange={handleChange}
           className='w-full p-2 mt-4 border rounded'
-          />
-        {errors.password && <p className='text-sm text-red-500'>{errors.password}</p>}
-        <label htmlFor="role">I am signing up as: </label>
-
+        />
+        {errors.password && (
+          <p className='text-sm text-red-500'>{errors.password}</p>
+        )}
+        <label htmlFor='role'>I am signing up as: </label>
         {/* select / option components to allow users to choose role */}
-        <select 
-          className="w-full p-2 my-2 border rounded" 
-          name="role" 
-          id="role"
+        <select
+          className='w-full p-2 my-2 border rounded'
+          name='role'
+          id='role'
           onChange={handleChange}
-          >
-          <option value=""></option>
-          <option value="agent">Real estate agent</option>
-          <option value="customer">Customer</option>
+        >
+          <option value=''></option>
+          <option value='agent'>Real estate agent</option>
+          <option value='customer'>Customer</option>
         </select>
         {errors.role && <p className='text-sm text-red-500'>{errors.role}</p>}
+        {isAgent && (
+          <>
+            <p className='text-sm text-green-500'>Provide your Agency Name</p>
+            <input
+              type='text'
+              name='agency'
+              id='agency'
+              placeholder='Agency'
+              value={formData.agency}
+              onChange={handleChange}
+              className='w-full p-2 m-2 border rounded'
+            />
+          </>
+        )}
         <button
           type='submit'
           className='w-full p-2 text-white bg-green-600 rounded'
-          >
+        >
           Register
         </button>
       </form>
