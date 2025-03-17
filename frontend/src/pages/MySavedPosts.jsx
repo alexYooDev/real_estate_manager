@@ -1,13 +1,14 @@
-import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
-import { useProperties } from "../context/PropertyContext";
 import PropertyList from "../components/PropertyList";
-import axiosInstance from "../axiosConfig";
+import { useAuth } from "../context/AuthContext";
+import { useProperties } from "../context/PropertyContext";
+import axiosInstance from "axios";
 
-const MyPropertyPosts = () => {
-    
+
+const MySavedPosts = () => {
+
     const {user} = useAuth();
-    const {properties, setProperties} = useProperties();
+    const { properties, setProperties } = useProperties();
 
     useEffect(() => {
         const fetchProperties = async () => {
@@ -20,16 +21,14 @@ const MyPropertyPosts = () => {
             console.log(error.message);
           } finally {
             setProperties((properties) =>
-              properties.filter((property) => property.agent === user.id)
+              properties.filter((property) => property._id === user.id)
             );
           }
         };
         fetchProperties();
-    }, []);
-
-    return (
-      <PropertyList properties={properties} user={user}/>
-    );
+    }, [])
+    
+    return <PropertyList properties={properties} user={user} />;
 }
 
-export default MyPropertyPosts;
+export default MySavedPosts;

@@ -12,7 +12,6 @@ const useFetchProperties = ({pathname}) => {
     useEffect(() => {
 
         if (isSearch.state?.isSearch) {
-            console.log(isSearch)
             return;
         }
 

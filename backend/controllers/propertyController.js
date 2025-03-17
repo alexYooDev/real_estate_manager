@@ -64,7 +64,7 @@ const getPropertiesAll = async (_, res) => {
 
 const searchProperty = async (req, res) => {
     
-    const { price, location, type, bedrooms, bathrooms, status, agent} = req.query;
+    const { price, location, type, bedrooms, bathrooms, status, agent } = req.query;
 
     let filter = {}
 
@@ -88,7 +88,6 @@ const searchProperty = async (req, res) => {
 
     try {
         const searchedProperty = await Property.find(filter);
-        console.log(searchedProperty);
         res.status(201).json(searchedProperty);
     } catch(error) {
         res.status(500).json({message: error.message});

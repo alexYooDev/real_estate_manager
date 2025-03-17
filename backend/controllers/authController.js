@@ -2,6 +2,7 @@ const url = require('url');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Property = require('../models/Property');
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
@@ -29,7 +30,7 @@ const loginUser = async (req, res) => {
     try {
         const user = await User.findOne({ email });
         if (user && (await bcrypt.compare(password, user.password))) {
-            res.json({ id: user.id, name: user.name, email: user.email, role: user.role, token: generateToken(user.id) });
+            res.json({ id: user.id, name: user.name, email: user.email, role: user.role, savedProperties: user.savedProperties, propertiesListed: user.propertiesListed, token: generateToken(user.id) });
         } else {
             res.status(401).json({ message: 'Invalid email or password' });
         }
@@ -84,19 +85,72 @@ const updateUserProfile = async (req, res) => {
 
         if (!user) return res.status(404).json({ message: 'User not found' });
 
-        const { name, email, agency, address } = req.body;
+
+        const { name, email, agency, savedProperties, propertiesListed } = req.body;
         user.name = name || user.name;
         user.email = email || user.email;
         user.agency = agency || user.agency;
-        user.address = address || user.address;
+        user.savedProperties = savedProperties || user.savedProperties;
+        user.propertiesListed = propertiesListed || user.propertiesListed;
+        
 
         const updatedUser = await user.save();
         
-        res.json({ id: updatedUser.id, name: updatedUser.name, email: updatedUser.email, agency: updatedUser.agency, address: updatedUser.address, token: generateToken(updatedUser.id) });
+        res.json({ 
+          id: updatedUser.id, 
+          name: updatedUser.name, 
+          email: updatedUser.email, 
+          agency: updatedUser.agency, 
+          savedProperties:  updatedUser.savedProperties, 
+          propertiesListed: updatedUser.propertiesListed, 
+          token: generateToken(updatedUser.id) 
+        });
     
       } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-module.exports = { registerUser, loginUser, updateUserProfile, getProfile, getUserDetail };
+const updateSavedPost = async (req, res) => {
+  try {
+
+    const user = await User.findById(req.user.id);
+    
+    if (!user) {
+      return res.status(404).json({message: "User not found!"});
+    }
+
+    const { propertyId } = req.body;
+    const propertyExists = user.savedProperties.includes(propertyId);
+
+    let updatedUser;
+
+    // if user already saved the same post
+    if (propertyExists) {
+      user.savedProperties = user.savedProperties.filter(
+        (id) => id.toString() !== propertyId
+      );
+      await user.save();
+      updatedUser =  user;
+
+    } else {
+      updatedUser = await User.findByIdAndUpdate(
+        req.user.id,
+        { $push: { savedProperties: req.body.propertyId } },
+        { new: true }
+      );
+    }
+
+    res.status(201).json({
+      id: updatedUser._id,
+      saved: updatedUser.savedProperties,
+    });
+    
+  } catch (error) {
+    res.status(500).json({message:error.message});
+  }
+
+
+}
+
+module.exports = { registerUser, loginUser, updateUserProfile, getProfile, getUserDetail, updateSavedPost };

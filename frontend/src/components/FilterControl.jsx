@@ -53,9 +53,9 @@ const FilterControl = ({filters, onChange, setFilters}) => {
           className='px-2 py-1 text-sm border rounded-md shadow-sm w-36 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-auto'
         >
           <option value=''>Status</option>
-          <option value='For Sale'>For Sale</option>
-          <option value='For Rent'>For Rent</option>
-          <option value='Sold'>Sold</option>
+          <option value='for sale'>For Sale</option>
+          <option value='for rent'>For Rent</option>
+          <option value='sold'>Sold</option>
         </select>
         <div className='w-full p-2 bg-white border rounded-md shadow-sm sm:w-auto'>
           <label htmlFor='priceRange' className='block text-sm font-medium text-center'>

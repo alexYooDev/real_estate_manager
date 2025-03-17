@@ -35,7 +35,7 @@ const Register = () => {
   };
 
   return (
-    <div className='max-w-md mx-auto mt-20'>
+    <div className='max-w-md min-h-screen mx-auto mt-20'>
       <form onSubmit={handleSubmit} className='p-6 bg-white rounded shadow-md'>
         <h1 className='mb-4 text-2xl font-bold text-center'>Register</h1>
         <input
@@ -90,7 +90,7 @@ const Register = () => {
               placeholder='Agency'
               value={formData.agency}
               onChange={handleChange}
-              className='w-full p-2 m-2 border rounded'
+              className='w-full p-2 my-3 border rounded'
             />
           </>
         )}
