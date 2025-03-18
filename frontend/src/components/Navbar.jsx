@@ -22,7 +22,7 @@ const Navbar = () => {
         </Link>
         {user ? (
           <>
-            {user.role === 'agent' ? (
+            {user.role === 'agent' && (
               <>
                 <Link to='/create-property' className='mr-4'>
                   Post New Property
@@ -31,10 +31,7 @@ const Navbar = () => {
                   My Property Posts
                 </Link>
               </>
-            ) : user.role === 'customer' ? 
-            (<></>) : 
-            (<></>)
-            }
+            )}
             <Link to='/profile' className='mr-4'>
               Profile
             </Link>
@@ -47,10 +44,7 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <Link
-              to='/login'
-              className='mr-4'
-            >
+            <Link to='/login' className='mr-4'>
               Login
             </Link>
             <Link
