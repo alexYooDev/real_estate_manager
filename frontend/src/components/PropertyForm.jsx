@@ -73,8 +73,6 @@ const PropertyForm = ({property, isEditting}) => {
 
     let response;
 
-    console.log(formData)
-
     try {
       if (isEditting) {
         // only update property post when updating
@@ -88,6 +86,7 @@ const PropertyForm = ({property, isEditting}) => {
       console.log(error);
     } finally {
       if (response.data) {
+        alert('You have successfully updated the post!');
         navigate('/view-property');
       }
     }

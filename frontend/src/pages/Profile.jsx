@@ -59,8 +59,8 @@ const Profile = () => {
         <h1 className='mb-4 text-2xl font-bold text-center'>Your Profile</h1>
         <label htmlFor='name'>Name</label>
         <input
-          id='name'
           type='text'
+          id='name'
           placeholder='Name'
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -74,22 +74,24 @@ const Profile = () => {
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           className='w-full p-2 mb-4 border rounded'
         />
-        { user.role === 'agent' && (
+        {user.role === 'agent' && (
           <>
             <label htmlFor='agency'>Agency</label>
             <input
               type='text'
               placeholder='Agency'
               value={formData.agency}
-              onChange={(e) => setFormData({ ...formData, agency: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, agency: e.target.value })
+              }
               className='w-full p-2 mb-4 border rounded'
-              />
+            />
           </>
         )}
         <button
           type='submit'
           className='w-full p-2 text-white bg-blue-600 rounded'
-          >
+        >
           {loading ? 'Updating...' : 'Update Profile'}
         </button>
       </form>

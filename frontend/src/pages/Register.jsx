@@ -5,21 +5,20 @@ import useFormValition from '../hooks/useFormValidation';
 import { validateForm } from '../utils/validateForm';
 
 const Register = () => {
-
-  // role added to the formData state
-
+  
   // form validation hook 
-  const {formData, errors, handleChange, isValidated, isAgent } = useFormValition(
+  const {formData, checkPassword, errors, handleChange, isValidated, isAgent } = useFormValition(
     {name: "", email: "", password: "", agency: "", role: ""}, 
     validateForm
   );
+
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    console.log(formData.password, checkPassword);
     
     try {
 
@@ -66,6 +65,17 @@ const Register = () => {
         />
         {errors.password && (
           <p className='text-sm text-red-500'>{errors.password}</p>
+        )}
+        <input
+          type='password'
+          name='checkPassword'
+          placeholder='Enter the password again'
+          value={checkPassword}
+          onChange={handleChange}
+          className='w-full p-2 mt-4 border rounded'
+        />
+        {errors.checkPassword && (
+          <p className='text-sm text-red-500'>{errors.checkPassword}</p>
         )}
         <label htmlFor='role'>I am signing up as: </label>
         {/* select / option components to allow users to choose role */}
