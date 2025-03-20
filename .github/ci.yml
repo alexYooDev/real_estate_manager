@@ -3,7 +3,8 @@ name: Backend CI
 on:
   push:
     branches:
-      - master  # Trigger CI on pushes to the master branch
+      - master  
+      # Trigger CI on pushes to the master branch
 
 
 jobs:
