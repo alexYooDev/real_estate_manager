@@ -113,6 +113,7 @@ describe('Property Controller - createProperty', () => {
     findByIdAndUpdateStub.restore();
   });
 
+
   it('should return 404 if agent does not exist', async () => {
     findByIdStub = sinon.stub(User, 'findById').resolves(null); // Simulate agent not found
 
@@ -216,6 +217,7 @@ describe('Get Property Function Test', () => {
   });
 });
 
+// search simulated
  describe('searchProperty', () => {
    it('should filter properties', async () => {
      req.query = { location: 'Brisbane', price: '200000,500000' };
