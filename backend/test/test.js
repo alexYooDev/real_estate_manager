@@ -53,6 +53,8 @@ const req = {
   params: {},
 };
 
+//test property functions
+
 describe('Property Controller - createProperty', () => {
 
   it("should create a property and update the agent's property list", async () => {
