@@ -10,6 +10,8 @@ import Main from './pages/Main';
 import UpdateProperty from './pages/UpdateProperty';
 import MyPropertyPosts from './pages/MyPropertyPosts';
 import Footer from './components/Footer';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/forgot-password" element={<ForgotPassword/>}/>
+        <Route path="/reset-password" element={<ResetPassword/>} />
         <Route path="/view-property" element={<PropertiesFeed/>} />
         <Route path="/view-detail" element={<PropertyDetail/>}/>
         <Route path="/create-property" element={<CreateProperties/>} />
