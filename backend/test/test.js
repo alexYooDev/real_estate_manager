@@ -217,7 +217,6 @@ describe('Get Property Function Test', () => {
   });
 });
 
-// search simulated
  describe('searchProperty', () => {
    it('should filter properties', async () => {
      req.query = { location: 'Brisbane', price: '200000,500000' };
