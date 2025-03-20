@@ -122,7 +122,7 @@ const PropertyCard = ({property, user, onDelete}) => {
                 View Details
               </button>
               {/* show only when it is not my created post */}
-              { property.agent !== user.id && 
+              { property.agent !== user?.id && 
                   <button className='px-4 py-2 mt-4 text-white transition bg-blue-500 hover:bg-blue-600'>
                     Contact Agent
                   </button>
