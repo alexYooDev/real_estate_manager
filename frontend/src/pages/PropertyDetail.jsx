@@ -9,16 +9,18 @@ const PropertyDetail = () => {
     const [agent, setAgent] = useState({});
 
     useEffect(() => {
-      const fetchAgentProfile = async () =>{
+      const fetchAgentProfile = async () => {
         try {
-          const response = await axiosInstance(`/api/auth/detail/${property.agent}`);
+          const response = await axiosInstance(
+            `/api/auth/detail/${property.agent}`
+          );
           setAgent(response.data);
-        } catch(error) {
+        } catch (error) {
           console.log(error);
         }
-      }
+      };
       fetchAgentProfile();
-    }, [])
+    }, [property.agent]);
 
     return (
       <div className='flex justify-center min-h-screen p-6 bg-gray-100'>

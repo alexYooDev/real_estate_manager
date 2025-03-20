@@ -10,20 +10,22 @@ const MyPropertyPosts = () => {
     const {properties, setProperties} = useProperties();
     
     useEffect(() => {
-        const fetchProperties = async () => {
-          try {
-            const response = await axiosInstance.get('/api/view-all-property');
-            if (response) {
-              setProperties(response.data);
-            }
-          } catch (error) {
-            console.log(error.message);
-          } finally {
-              setProperties((properties) => properties.filter((property) => property.agent === user.id));
+      const fetchProperties = async () => {
+        try {
+          const response = await axiosInstance.get('/api/view-all-property');
+          if (response) {
+            setProperties(response.data);
           }
-        };
-        fetchProperties();
-    }, []);
+        } catch (error) {
+          console.log(error.message);
+        } finally {
+          setProperties((properties) =>
+            properties.filter((property) => property.agent === user.id)
+          );
+        }
+      };
+      fetchProperties();
+    }, [setProperties, user.id]);
 
     return (
         <PropertyList properties={properties} user={user}/>

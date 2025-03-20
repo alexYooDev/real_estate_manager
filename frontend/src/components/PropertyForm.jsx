@@ -29,21 +29,22 @@ const PropertyForm = ({property, isEditting}) => {
     if (property) {
       setFeatures(property.features);
     }
-    
-    setFormData(property || {
-  title: '',
-  description: '',
-  price: '',
-  features: features,
-  location: '',
-  type: 'apartment',
-  bedrooms: '',
-  bathrooms: '',
-  agent: user.id,
-  status: 'for sale',
-  });
 
-  }, [])
+    setFormData(
+      property || {
+        title: '',
+        description: '',
+        price: '',
+        features: features,
+        location: '',
+        type: 'apartment',
+        bedrooms: '',
+        bathrooms: '',
+        agent: user.id,
+        status: 'for sale',
+      }
+    );
+  }, [features, property, user.id]);
 
 
   // this runs every time features state updates

@@ -6,9 +6,12 @@ const PropertyList = ({user, properties}) => {
 
     const { setProperties } = useProperties();
 
-    const handleDeleteProperty = useCallback((propertyId) => {
-          setProperties((prev) => prev.filter((prop) => prop._id !== propertyId));
-        }, []);
+    const handleDeleteProperty = useCallback(
+      (propertyId) => {
+        setProperties((prev) => prev.filter((prop) => prop._id !== propertyId));
+      },
+      [setProperties]
+    );
 
     return (
         <>

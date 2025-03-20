@@ -27,7 +27,7 @@ const useFetchProperties = ({pathname}) => {
     };
 
     fetchProperties();
-  }, []);
+  }, [isSearch, setProperties]);
 };
 
 export default useFetchProperties;
