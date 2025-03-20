@@ -5,34 +5,29 @@ import { useLocation } from 'react-router-dom';
 
 const useFetchProperties = ({pathname}) => {
 
-    const {properties, setProperties} = useProperties();
+  const { setProperties } = useProperties();
 
-    const isSearch = useLocation();
+  const isSearch = useLocation();
 
-    useEffect(() => {
+  useEffect(() => {
+    if (isSearch.state?.isSearch) {
+      console.log(isSearch);
+      return;
+    }
 
-        if (isSearch.state?.isSearch) {
-            console.log(isSearch)
-            return;
+    const fetchProperties = async () => {
+      try {
+        const response = await axiosInstance.get('/api/view-all-property');
+        if (response) {
+          setProperties(response.data);
         }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
 
-        const fetchProperties = async () => {
-
-            try {
-                const response = await axiosInstance.get(
-                  '/api/view-all-property'
-                );
-                if (response) {
-                  setProperties(response.data);
-                }
-            } catch(error) {
-                console.log(error.message);
-            }
-        }
-
-        fetchProperties();
-    }, [])
-
+    fetchProperties();
+  }, []);
 };
 
 export default useFetchProperties;
