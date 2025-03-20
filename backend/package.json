@@ -12,7 +12,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "chai": "^4.5.0",
-    "chai-http": "^4.3.0",
+    "chai-http": "^4.4.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
@@ -22,9 +22,9 @@
   "devDependencies": {
     "esm": "^3.2.25",
     "express": "^4.21.2",
-    "mocha": "^11.0.1",
+    "mocha": "^11.1.0",
     "nodemon": "^2.0.15",
-    "sinon": "^19.0.2"
+    "sinon": "^19.0.4"
   },
   "author": "Task Manager Team",
   "license": "ISC"

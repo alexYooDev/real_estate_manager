@@ -23,7 +23,6 @@ const createProperty =  async (req, res) => {
             agent, 
             status
         });
-        
 
         // update corresponding agent's property list
         await User.findByIdAndUpdate(agent, { $push: {propertiesListed: property._id}}, {new: true})
@@ -47,18 +46,18 @@ const createProperty =  async (req, res) => {
 };
 
 const getPropertiesAll = async (_, res) => {
-    const properties = await Property.find();
-
-    if (!properties) {
-        res.status(404).json({message: 'No properties found.'});
-    }
-
-    res.status(200).json(properties);
-
     try {
+        const properties = await Property.find();
+
+        if (!properties) {
+            return res.status(404).json({message: 'No properties found.'});
+        }
+
+        res.status(200).json(properties);
+
         
     } catch(error) {
-        res.status(500).json({message: error.message});
+        return res.status(500).json({message: error.message});
     }
 };
 
@@ -88,7 +87,6 @@ const searchProperty = async (req, res) => {
 
     try {
         const searchedProperty = await Property.find(filter);
-        console.log(searchedProperty);
         res.status(201).json(searchedProperty);
     } catch(error) {
         res.status(500).json({message: error.message});
@@ -98,19 +96,20 @@ const searchProperty = async (req, res) => {
 const updateProperty = async (req, res) => {
 
      try {
-        const updatedProperty = await Property.replaceOne(
-          { _id: req.params.id },
+
+        const updatedProperty = await Property.findByIdAndUpdate(
+          req.params.id,
           req.body,
-          { new: true }
+          { new: true, runValidators: true }
         );
 
         if (!updatedProperty) {
-            res.status(404).json({message: 'Property not found!'});
+            return res.status(404).json({message: 'Property not found!'});
         } 
         
-        res.status(202).json(updatedProperty);
+        return res.status(202).json(updatedProperty);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
     }
 }
 
