@@ -23,7 +23,6 @@ const createProperty =  async (req, res) => {
             agent, 
             status
         });
-        
 
         // update corresponding agent's property list
         await User.findByIdAndUpdate(agent, { $push: {propertiesListed: property._id}}, {new: true})

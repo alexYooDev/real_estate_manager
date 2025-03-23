@@ -89,7 +89,7 @@ const PropertyCard = ({property, user, onDelete}) => {
 
     if (proceed) {
       try {
-          await axiosInstance.post('/api/delete-property', {_id: property._id});
+          await axiosInstance.delete('/api/delete-property', {_id: property._id});
           onDelete(property._id);
         } catch(error) {
             console.log(error);

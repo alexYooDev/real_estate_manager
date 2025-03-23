@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post('/create-property', createProperty);
 router.get('/view-all-property', getPropertiesAll);
-router.post('/update-property/:id', updateProperty);
-router.post('/delete-property', deleteProperty);
+router.put('/update-property/:id', updateProperty);
+router.delete('/delete-property', deleteProperty);
 router.get('/search-property', searchProperty);
 
 module.exports = router;

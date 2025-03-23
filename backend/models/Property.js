@@ -11,7 +11,6 @@ const propertySchema = mongoose.Schema({
     type: {type: String, enum: ['apartment', 'house', 'office'], required: true },
     bedrooms: {type: Number, required: true},
     bathrooms: {type: Number, required:true},
-    images: [{type: String}],
     agent: {type: mongoose.Schema.Types.ObjectId, ref: User, required: true},
     createdAt: {type: Date, default: Date.now}
 });
