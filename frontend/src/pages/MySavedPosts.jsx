@@ -1,34 +1,46 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PropertyList from "../components/PropertyList";
 import { useAuth } from "../context/AuthContext";
 import { useProperties } from "../context/PropertyContext";
-import axiosInstance from "axios";
-
+import axiosInstance from "../axiosConfig";
 
 const MySavedPosts = () => {
 
     const {user} = useAuth();
-    const { properties, setProperties } = useProperties();
+    const [isLoading, setIsLoading] = useState(false);
+    const [savedProperties ,setSavedProperties] = useState();
 
     useEffect(() => {
-        const fetchProperties = async () => {
+        const fetchSavedProperties = async () => {
           try {
-            const response = await axiosInstance.get('/api/view-all-property');
+            setIsLoading(true);
+            const response = await axiosInstance.get(
+              '/api/view-saved-property',
+              {
+                headers: { Authorization: `Bearer ${user.token}` },
+              }
+            );
             if (response) {
-              setProperties(response.data);
+              setSavedProperties(response.data);
+              setIsLoading(false);
             }
           } catch (error) {
             console.log(error.message);
-          } finally {
-            setProperties((properties) =>
-              properties.filter((property) => property._id === user.id)
-            );
-          }
+          } 
         };
-        fetchProperties();
-    }, [])
+        fetchSavedProperties();
+    }, []);
     
-    return <PropertyList properties={properties} user={user} />;
+    return (
+      <>
+        {isLoading ? (
+          <p className="text-center">loading...</p>
+        ) : (
+          <PropertyList properties={savedProperties} savedProperties={savedProperties} user={user} />
+        )}
+        {!savedProperties && <p>No Saved Properties Found!</p>}
+      </>
+    );
 }
 
 export default MySavedPosts;

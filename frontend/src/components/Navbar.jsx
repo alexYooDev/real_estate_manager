@@ -32,6 +32,9 @@ const Navbar = () => {
                 </Link>
               </>
             )}
+            <Link to='/saved-post' className='mr-4'>
+              Saved Posts
+            </Link>
             <Link to='/profile' className='mr-4'>
               Profile
             </Link>

@@ -2,13 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-const PropertyCard = ({property, user, onDelete}) => {
+
+const PropertyCard = ({property, savedProperties, user, onDelete}) => {
 
   const navigate = useNavigate();
 
-  const { savePost } = useAuth();
-
-  const [isSaved, setIsSaved] = useState([] ||user?.savedProperties);
+  const [isSaved, setIsSaved] = useState(user?.savedProperties);
   const [agent, setAgent] = useState({});
 
   useEffect(() => {
@@ -51,11 +50,21 @@ const PropertyCard = ({property, user, onDelete}) => {
       }
 
       if (user) {
-        const response = await axiosInstance.put('/api/auth/save-post', {propertyId: property._id}, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
-        const {saved} = response.data;
-        await setIsSaved(saved)();
+        const response = await axiosInstance.put(
+          '/api/auth/save-post',
+          { propertyId: property._id },
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        );
+        
+        if (localStorage.getItem(property._id) === 'saved') {
+          localStorage.removeItem(property._id);
+          setIsSaved((prev) => prev.filter(propertyId => propertyId !== property._id));
+        } else {
+          localStorage.setItem(property._id, 'saved');
+          setIsSaved((prev) => [...prev, property._id]);
+        }
       }
       
     } catch(error) {
@@ -67,7 +76,7 @@ const PropertyCard = ({property, user, onDelete}) => {
     let proceed;
 
     if (!user) {
-      proceed = window.confirm('You need to login to save the post!');
+      proceed = window.confirm('You need to login to contact the agent!');
     }
 
     if (proceed) {
@@ -92,8 +101,8 @@ const PropertyCard = ({property, user, onDelete}) => {
           await axiosInstance.delete('/api/delete-property', {_id: property._id});
           onDelete(property._id);
         } catch(error) {
-            console.log(error);
-          }
+          alert(error.message);
+        }
     }
   };
 
@@ -189,7 +198,7 @@ const PropertyCard = ({property, user, onDelete}) => {
                   Contact Agent
                 </button>
               )}
-              {isSaved?.includes(property._id) ? (
+              {localStorage.getItem(property._id) === 'saved' && isSaved?.includes(property._id) ? (
                 <button
                   className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-r-lg hover:bg-blue-600'
                   onClick={handleClickSave}

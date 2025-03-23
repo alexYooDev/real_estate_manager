@@ -12,6 +12,7 @@ import MyPropertyPosts from './pages/MyPropertyPosts';
 import Footer from './components/Footer';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import MySavedPosts from './pages/MySavedPosts';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/create-property" element={<CreateProperties/>} />
         <Route path="/update-property" element={<UpdateProperty/>}/>
         <Route path="/my-post" element={<MyPropertyPosts/>}/>
+        <Route path='/saved-post' element={<MySavedPosts/>}/>
       </Routes>
       <Footer/>
     </Router>
