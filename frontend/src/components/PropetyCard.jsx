@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
 import { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 
 const PropertyCard = ({property, savedProperties, user, onDelete}) => {
 
@@ -50,7 +49,7 @@ const PropertyCard = ({property, savedProperties, user, onDelete}) => {
       }
 
       if (user) {
-        const response = await axiosInstance.put(
+        await axiosInstance.put(
           '/api/auth/save-post',
           { propertyId: property._id },
           {
@@ -178,8 +177,10 @@ const PropertyCard = ({property, savedProperties, user, onDelete}) => {
             <div>
               <p className='font-semibold'>Key features</p>
               <ul className='flex'>
-                {property.features?.map((feat) => (
-                  <li className='m-1 list-none'>✅ {feat}</li>
+                {property.features?.map((feat, index) => (
+                  <li key={`${feat} ${index}`} className='m-1 list-none'>
+                    ✅ {feat}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -194,11 +195,15 @@ const PropertyCard = ({property, savedProperties, user, onDelete}) => {
               </button>
               {/* show only when it is not my created post */}
               {property.agent !== user?.id && (
-                <button className='px-4 py-2 mt-4 text-white transition bg-blue-500 hover:bg-blue-600' onClick={handleClickContact}>
+                <button
+                  className='px-4 py-2 mt-4 text-white transition bg-blue-500 hover:bg-blue-600'
+                  onClick={handleClickContact}
+                >
                   Contact Agent
                 </button>
               )}
-              {localStorage.getItem(property._id) === 'saved' && isSaved?.includes(property._id) ? (
+              {localStorage.getItem(property._id) === 'saved' &&
+              isSaved?.includes(property._id) ? (
                 <button
                   className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-r-lg hover:bg-blue-600'
                   onClick={handleClickSave}

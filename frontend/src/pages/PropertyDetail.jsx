@@ -13,7 +13,7 @@ const PropertyDetail = () => {
       let proceed 
 
       if (!user) {
-        proceed = window.confirm('You need to login to save the post!');
+        proceed = window.confirm('You need to login to contact the agent!');
       }
 
       if (proceed) {

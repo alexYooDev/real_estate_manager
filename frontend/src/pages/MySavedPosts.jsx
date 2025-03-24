@@ -22,8 +22,10 @@ const MySavedPosts = () => {
             );
             if (response) {
               setSavedProperties(response.data);
-              setIsLoading(false);
-            }
+            } 
+            
+            setIsLoading(false);
+            
           } catch (error) {
             console.log(error.message);
           } 

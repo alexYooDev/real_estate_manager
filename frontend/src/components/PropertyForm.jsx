@@ -222,7 +222,7 @@ const PropertyForm = ({property, isEditting}) => {
         <div className='mb-3'>
           <ul className='flex gap-3'>
             {features.map((feat, index) => (
-              <li key={index}>
+              <li key={`${feat} ${index}`}>
                 {feat}{' '}
                 <button className='ml-1' onClick={() => removeFeature(index)}>
                   ❌
