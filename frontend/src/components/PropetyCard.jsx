@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
 import { useEffect, useState } from 'react';
 
-const PropertyCard = ({property, savedProperties, user, onDelete}) => {
+const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => {
 
   const navigate = useNavigate();
 
@@ -21,6 +21,12 @@ const PropertyCard = ({property, savedProperties, user, onDelete}) => {
       }
     };
     fetchAgentProfile();
+
+    const savedFromLocalStorage = Object.keys(localStorage).filter(
+      (key) => localStorage.getItem(key) === 'saved'
+    );
+    setIsSaved(savedFromLocalStorage);
+    
   }, []);
 
 
@@ -57,13 +63,21 @@ const PropertyCard = ({property, savedProperties, user, onDelete}) => {
           }
         );
         
-        if (localStorage.getItem(property._id) === 'saved') {
-          localStorage.removeItem(property._id);
-          setIsSaved((prev) => prev.filter(propertyId => propertyId !== property._id));
-        } else {
-          localStorage.setItem(property._id, 'saved');
-          setIsSaved((prev) => [...prev, property._id]);
-        }
+        setIsSaved((prev = []) => {
+          let updatedSaved = Array.isArray(prev) ? [...prev] : [];
+
+          if (localStorage.getItem(property._id)) {
+            localStorage.removeItem(property._id);
+            updatedSaved = updatedSaved.filter((id) => id !== property._id);
+
+            if (onUnsave) onUnsave(property._id);
+
+          } else {
+            localStorage.setItem(property._id, 'saved');
+            updatedSaved.push(property._id);
+          }
+          return updatedSaved;
+        });
       }
       
     } catch(error) {
@@ -165,7 +179,6 @@ const PropertyCard = ({property, savedProperties, user, onDelete}) => {
                 {property.bathrooms}
               </span>
             </div>
-
             <span className='text-xl font-bold text-blue-600'>
               {/* Rent price is around 1% percent of property price per month */}
               {property.status === 'for rent'
@@ -202,22 +215,12 @@ const PropertyCard = ({property, savedProperties, user, onDelete}) => {
                   Contact Agent
                 </button>
               )}
-              {localStorage.getItem(property._id) === 'saved' &&
-              isSaved?.includes(property._id) ? (
-                <button
-                  className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-r-lg hover:bg-blue-600'
-                  onClick={handleClickSave}
-                >
-                  Unsave Post
-                </button>
-              ) : (
-                <button
-                  className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-r-lg hover:bg-blue-600'
-                  onClick={handleClickSave}
-                >
-                  Save Post
-                </button>
-              )}
+              <button
+                className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-r-lg hover:bg-blue-600'
+                onClick={handleClickSave}
+              >
+                {isSaved?.includes(property._id) ? 'Unsave Post' : 'Save Post'}
+              </button>
             </div>
             {property.agent === user?.id && (
               <div>

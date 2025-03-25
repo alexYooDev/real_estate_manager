@@ -3,7 +3,6 @@ import axiosInstance from '../axiosConfig';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     const {value} = e.target;
@@ -15,7 +14,7 @@ const ForgotPassword = () => {
     const response = await axiosInstance.post('api/auth/forgot-password', {email});
 
     const data = response.data;
-    setMessage(data.message);
+    alert(data.message);
   };
 
   return (
@@ -39,7 +38,6 @@ const ForgotPassword = () => {
           Send Reset Link
         </button>
       </form>
-      {message && <p className='text-sm text-center text-green-500'>{message}</p>}
     </div>
   );
 };

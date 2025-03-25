@@ -112,9 +112,12 @@ const PropertyDetail = () => {
             </div>
 
             {/* Contact Button */}
+            {
+              user._id !== agent._id  &&
             <button onClick={handleClickContact} className='w-full py-3 mt-6 text-lg font-semibold text-white transition bg-blue-500 rounded-lg hover:bg-blue-700'>
               Contact Agent
             </button>
+            }
           </div>
         </div>
       </div>

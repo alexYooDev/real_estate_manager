@@ -32,16 +32,28 @@ const MySavedPosts = () => {
         };
         fetchSavedProperties();
     }, []);
+
+    const handleUnsaveProperty = (propertyId) => {
+      setSavedProperties((prev) => prev?.filter((p) => p._id !== propertyId));
+    };
     
     return (
-      <>
+      <div>
+        <h2 className='m-6 text-2xl font-semibold'>
+          🚩 {user.name}'s Saved Posts
+        </h2>
         {isLoading ? (
-          <p className="text-center">loading...</p>
+          <p className='text-center'>loading...</p>
         ) : (
-          <PropertyList properties={savedProperties} savedProperties={savedProperties} user={user} />
+          <PropertyList
+            properties={savedProperties}
+            savedProperties={savedProperties}
+            onUnsave={handleUnsaveProperty}
+            user={user}
+          />
         )}
         {!savedProperties && <p>No Saved Properties Found!</p>}
-      </>
+      </div>
     );
 }
 

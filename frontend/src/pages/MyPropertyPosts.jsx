@@ -28,7 +28,12 @@ const MyPropertyPosts = () => {
     }, []);
 
     return (
-      <PropertyList properties={properties} user={user}/>
+      <div>
+        <h2 className='m-6 text-2xl font-semibold'>
+          🏡 {user.name}'s Posts
+        </h2>
+        <PropertyList properties={properties} user={user} />
+      </div>
     );
 }
 
