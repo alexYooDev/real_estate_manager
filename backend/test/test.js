@@ -5,7 +5,7 @@ const app = require('../server');
 const connectDB = require('../config/db');
 const mongoose = require('mongoose');
 const sinon = require('sinon');
-const Task = require('../models/Task');
+const Property = require('../models/Property');
 
 const {
   registerUser,
@@ -13,10 +13,7 @@ const {
   updateUserProfile,
   getProfile,
   getUserDetail,
-  updateSavedPost,
-  forgotPassword,
-  resetPassword,
-} = require('../controllers/authControllerr');
+} = require('../controllers/authController');
 
 const {
   createProperty,
@@ -24,7 +21,8 @@ const {
   searchProperty,
   updateProperty,
   deleteProperty,
-} = require('../controllers/authController');
+} = require('../controllers/propertyController');
+const User = require('../models/User');
 
 const { expect } = chai;
 
@@ -32,138 +30,151 @@ chai.use(chaiHttp);
 let server;
 let port;
 
-describe('AddTask Function Test', () => {
-  it('should create a new task successfully', async () => {
-    // Mock request data
-    const req = {
-      user: { id: new mongoose.Types.ObjectId() },
-      body: {
-        title: 'New Task',
-        description: 'Task description',
-        deadline: '2025-12-31',
-      },
+// Mock express response
+const res = {
+  status: sinon.stub().returnsThis(),
+  json: sinon.spy(),
+};
+
+// Mock request object
+const req = {
+  body: {
+    title: 'Property Title',
+    description: 'Property Description',
+    price: 100000,
+    location: 'Location',
+    type: 'Apartment',
+    bedrooms: 2,
+    bathrooms: 1,
+    agent: 'agent_id',
+    status: 'available',
+  },
+  params: {},
+};
+
+//test property functions
+
+describe('Property Controller - createProperty', () => {
+  it("should create a property and update the agent's property list", async () => {
+    const mockAgent = {
+      _id: 'agent_id',
+      propertiesListed: [],
     };
 
-    // Mock task that would be created
-    const createdTask = {
-      _id: new mongoose.Types.ObjectId(),
-      ...req.body,
-      userId: req.user.id,
+    const mockProperty = {
+      _id: 'property_id',
+      title: 'Property Title',
+      description: 'Property Description',
+      price: 100000,
+      location: 'testLocation',
+      type: 'apartment',
+      bedrooms: 2,
+      bathrooms: 1,
+      agent: 'agent_id',
+      status: 'available',
     };
 
-    // Stub Task.create to return the createdTask
-    const createStub = sinon.stub(Task, 'create').resolves(createdTask);
+    // Mock User and Property model methods
+    const findByIdStub = sinon.stub(User, 'findById').resolves(mockAgent);
+    const createStub = sinon.stub(Property, 'create').resolves(mockProperty);
+    const findByIdAndUpdateStub = sinon
+      .stub(User, 'findByIdAndUpdate')
+      .resolves(mockAgent);
 
-    // Mock response object
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.spy(),
-    };
+    await createProperty(req, res);
 
-    // Call function
-    await addTask(req, res);
-
-    // Assertions
-    expect(createStub.calledOnceWith({ userId: req.user.id, ...req.body })).to
-      .be.true;
+    // Check that the response was sent with the correct status and data
     expect(res.status.calledWith(201)).to.be.true;
-    expect(res.json.calledWith(createdTask)).to.be.true;
 
-    // Restore stubbed methods
+    expect(
+      res.json.calledWith({
+        id: mockProperty.id,
+        title: mockProperty.title,
+        description: mockProperty.description,
+        price: mockProperty.price,
+        location: mockProperty.location,
+        type: mockProperty.type,
+        bedrooms: mockProperty.bedrooms,
+        bathrooms: mockProperty.bathrooms,
+        agent: mockProperty.agent,
+        status: mockProperty.status,
+      })
+    ).to.be.true;
+
+    // Ensure that the agent's properties list was updated
+    expect(
+      User.findByIdAndUpdate.calledWith(
+        'agent_id',
+        { $push: { propertiesListed: mockProperty._id } },
+        { new: true }
+      )
+    ).to.be.true;
+
+    findByIdStub.restore();
     createStub.restore();
+    findByIdAndUpdateStub.restore();
   });
 
-  it('should return 500 if an error occurs', async () => {
-    // Stub Task.create to throw an error
-    const createStub = sinon.stub(Task, 'create').throws(new Error('DB Error'));
+  it('should return 404 if agent does not exist', async () => {
+    findByIdStub = sinon.stub(User, 'findById').resolves(null); // Simulate agent not found
 
-    // Mock request data
-    const req = {
-      user: { id: new mongoose.Types.ObjectId() },
-      body: {
-        title: 'New Task',
-        description: 'Task description',
-        deadline: '2025-12-31',
-      },
-    };
+    await createProperty(req, res);
 
-    // Mock response object
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.spy(),
-    };
+    expect(res.status.calledWith(404)).to.be.true;
+    expect(res.json.calledWith({ message: 'Agent not found!' })).to.be.true;
 
-    // Call function
-    await addTask(req, res);
+    findByIdStub.restore();
+  });
 
-    // Assertions
+  it('should return 500 if there is a server error', async () => {
+    const errorMessage = 'Database error';
+    findByIdStub = sinon
+      .stub(User, 'findById')
+      .rejects(new Error(errorMessage));
+
+    await createProperty(req, res);
+
     expect(res.status.calledWith(500)).to.be.true;
-    expect(res.json.calledWithMatch({ message: 'DB Error' })).to.be.true;
+    expect(res.json.calledWith({ message: errorMessage })).to.be.true;
 
-    // Restore stubbed methods
-    createStub.restore();
+    findByIdStub.restore();
   });
 });
 
-describe('Update Function Test', () => {
-  it('should update task successfully', async () => {
-    // Mock task data
-    const taskId = new mongoose.Types.ObjectId();
-    const existingTask = {
-      _id: taskId,
-      title: 'Old Task',
-      description: 'Old Description',
-      completed: false,
-      deadline: new Date(),
-      save: sinon.stub().resolvesThis(), // Mock save method
-    };
-    // Stub Task.findById to return mock task
-    const findByIdStub = sinon.stub(Task, 'findById').resolves(existingTask);
+describe('Update Property Function Test', () => {
+  it('should update a property', async () => {
+    req.params.id = 'property_id';
+    req.body = { title: 'Updated Property Title' };
 
-    // Mock request & response
-    const req = {
-      params: { id: taskId },
-      body: { title: 'New Task', completed: true },
-    };
-    const res = {
-      json: sinon.spy(),
-      status: sinon.stub().returnsThis(),
-    };
+    findByIdAndUpdateStub = sinon
+      .stub(Property, 'findByIdAndUpdate')
+      .resolves({ acknowledged: true });
 
-    // Call function
-    await updateTask(req, res);
+    await updateProperty(req, res);
 
-    // Assertions
-    expect(existingTask.title).to.equal('New Task');
-    expect(existingTask.completed).to.equal(true);
-    expect(res.status.called).to.be.false; // No error status should be set
-    expect(res.json.calledOnce).to.be.true;
+    expect(res.status.calledWith(202)).to.be.true;
 
-    // Restore stubbed methods
-    findByIdStub.restore();
+    findByIdAndUpdateStub.restore();
   });
 
-  it('should return 404 if task is not found', async () => {
-    const findByIdStub = sinon.stub(Task, 'findById').resolves(null);
+  it('should return 404 if property not found', async () => {
+    findByIdAndUpdateStub = sinon
+      .stub(Property, 'findByIdAndUpdate')
+      .resolves(null);
 
-    const req = { params: { id: new mongoose.Types.ObjectId() }, body: {} };
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.spy(),
-    };
-
-    await updateTask(req, res);
+    await updateProperty(req, res);
 
     expect(res.status.calledWith(404)).to.be.true;
-    expect(res.json.calledWith({ message: 'Task not found' })).to.be.true;
 
-    findByIdStub.restore();
+    findByIdAndUpdateStub.restore();
   });
 
   it('should return 500 on error', async () => {
-    const findByIdStub = sinon
-      .stub(Task, 'findById')
-      .throws(new Error('DB Error'));
+    const errorMessage = 'DB Error';
+
+    findByIdAndUpdateStub = sinon
+      .stub(Property, 'findByIdAndUpdate')
+      .throws(new Error(errorMessage));
 
     const req = { params: { id: new mongoose.Types.ObjectId() }, body: {} };
     const res = {
@@ -171,148 +182,80 @@ describe('Update Function Test', () => {
       json: sinon.spy(),
     };
 
-    await updateTask(req, res);
+    await updateProperty(req, res);
 
     expect(res.status.calledWith(500)).to.be.true;
-    expect(res.json.called).to.be.true;
+    expect(res.json.calledWith({ message: errorMessage })).to.be.true;
 
-    findByIdStub.restore();
+    findByIdAndUpdateStub.restore();
   });
 });
 
-describe('GetTask Function Test', () => {
-  it('should return tasks for the given user', async () => {
-    // Mock user ID
-    const userId = new mongoose.Types.ObjectId();
+describe('Get Property Function Test', () => {
+  it('should return all properties for all the users', async () => {
+    const findStub = sinon
+      .stub(Property, 'find')
+      .resolves([{ id: 'property_id', title: 'Test Houses' }]);
 
-    // Mock task data
-    const tasks = [
-      { _id: new mongoose.Types.ObjectId(), title: 'Task 1', userId },
-      { _id: new mongoose.Types.ObjectId(), title: 'Task 2', userId },
-    ];
+    await getPropertiesAll({}, res);
 
-    // Stub Task.find to return mock tasks
-    const findStub = sinon.stub(Task, 'find').resolves(tasks);
+    expect(res.status.calledWith(200)).to.be.true;
 
-    // Mock request & response
-    const req = { user: { id: userId } };
-    const res = {
-      json: sinon.spy(),
-      status: sinon.stub().returnsThis(),
-    };
-
-    // Call function
-    await getTasks(req, res);
-
-    // Assertions
-    expect(findStub.calledOnceWith({ userId })).to.be.true;
-    expect(res.json.calledWith(tasks)).to.be.true;
-    expect(res.status.called).to.be.false; // No error status should be set
-
-    // Restore stubbed methods
     findStub.restore();
   });
 
-  it('should return 500 on error', async () => {
-    // Stub Task.find to throw an error
-    const findStub = sinon.stub(Task, 'find').throws(new Error('DB Error'));
+  it('should return 500 if getting all properties fails', async () => {
+    const errorMessage = 'Database error';
 
-    // Mock request & response
-    const req = { user: { id: new mongoose.Types.ObjectId() } };
-    const res = {
-      json: sinon.spy(),
-      status: sinon.stub().returnsThis(),
-    };
+    findStub = sinon.stub(Property, 'find').resolves(null);
 
-    // Call function
-    await getTasks(req, res);
+    await getPropertiesAll({}, res);
 
-    // Assertions
     expect(res.status.calledWith(500)).to.be.true;
-    expect(res.json.calledWithMatch({ message: 'DB Error' })).to.be.true;
+    expect(res.json.calledWith({ message: errorMessage })).to.be.true;
 
-    // Restore stubbed methods
+    findStub.restore();
+  });
+});
+
+describe('searchProperty', () => {
+  it('should filter properties', async () => {
+    req.query = { location: 'Brisbane', price: '200000,500000' };
+    const mockProperties = [{ title: 'Test filter houses' }];
+
+    findStub = sinon.stub(Property, 'find').resolves(mockProperties);
+
+    await searchProperty(req, res);
+
+    expect(res.json.calledWith(mockProperties)).to.be.true;
+    expect(res.status.calledWith(201)).to.be.true;
+
     findStub.restore();
   });
 });
 
 describe('DeleteTask Function Test', () => {
-  it('should delete a task successfully', async () => {
-    // Mock request data
-    const req = { params: { id: new mongoose.Types.ObjectId().toString() } };
+  it('should delete a property', async () => {
+    req.body._id = 'property123';
+    const deleteOneStub = sinon
+      .stub(Property, 'deleteOne')
+      .resolves({ deletedCount: 1 });
 
-    // Mock task found in the database
-    const task = { remove: sinon.stub().resolves() };
+    await deleteProperty(req, res);
 
-    // Stub Task.findById to return the mock task
-    const findByIdStub = sinon.stub(Task, 'findById').resolves(task);
+    expect(res.json.calledWith({ message: 'property deleted' })).to.be.true;
 
-    // Mock response object
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.spy(),
-    };
-
-    // Call function
-    await deleteTask(req, res);
-
-    // Assertions
-    expect(findByIdStub.calledOnceWith(req.params.id)).to.be.true;
-    expect(task.remove.calledOnce).to.be.true;
-    expect(res.json.calledWith({ message: 'Task deleted' })).to.be.true;
-
-    // Restore stubbed methods
-    findByIdStub.restore();
+    deleteOneStub.restore();
   });
 
-  it('should return 404 if task is not found', async () => {
-    // Stub Task.findById to return null
-    const findByIdStub = sinon.stub(Task, 'findById').resolves(null);
+  it('should return 500 if property deletion fails', async () => {
+    deleteOneStub = sinon.stub(Property, 'deleteOne').throws();
 
-    // Mock request data
-    const req = { params: { id: new mongoose.Types.ObjectId().toString() } };
+    await deleteProperty(req, res);
 
-    // Mock response object
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.spy(),
-    };
-
-    // Call function
-    await deleteTask(req, res);
-
-    // Assertions
-    expect(findByIdStub.calledOnceWith(req.params.id)).to.be.true;
-    expect(res.status.calledWith(404)).to.be.true;
-    expect(res.json.calledWith({ message: 'Task not found' })).to.be.true;
-
-    // Restore stubbed methods
-    findByIdStub.restore();
-  });
-
-  it('should return 500 if an error occurs', async () => {
-    // Stub Task.findById to throw an error
-    const findByIdStub = sinon
-      .stub(Task, 'findById')
-      .throws(new Error('DB Error'));
-
-    // Mock request data
-    const req = { params: { id: new mongoose.Types.ObjectId().toString() } };
-
-    // Mock response object
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.spy(),
-    };
-
-    // Call function
-    await deleteTask(req, res);
-
-    // Assertions
     expect(res.status.calledWith(500)).to.be.true;
-    expect(res.json.calledWithMatch({ message: 'DB Error' })).to.be.true;
+    expect(res.json.calledWith({ message: 'delete failed' })).to.be.true;
 
-    // Restore stubbed methods
-    findByIdStub.restore();
+    deleteOneStub.restore();
   });
 });

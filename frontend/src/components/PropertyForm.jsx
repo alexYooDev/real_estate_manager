@@ -77,20 +77,23 @@ const PropertyForm = ({property, isEditting}) => {
       if (isEditting) {
         // only update property post when updating
         response = await axiosInstance.put(`/api/update-property/${formData._id}`, formData);
+
+        if (response.data) {
+          alert('You have successfully updated the post!');
+          navigate('/view-property');
+        }
+
+        console.log(response);
         
       } else {
         // only create new property post when not updating
         response = await axiosInstance.post('/api/create-property', formData);
+
+        console.log(response.message);
       }
     } catch(error) {
       console.log(error);
-    } finally {
-      if (response.data) {
-        alert('You have successfully updated the post!');
-        navigate('/view-property');
-      }
-    }
-    
+    } 
   };
 
   return (

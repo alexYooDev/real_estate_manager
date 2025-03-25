@@ -115,8 +115,8 @@ const searchProperty = async (req, res) => {
 const updateProperty = async (req, res) => {
 
      try {
-        const updatedProperty = await Property.replaceOne(
-          { _id: req.params.id },
+        const updatedProperty = await Property.findByIdAndUpdate(
+          req.params.id,
           req.body,
           { new: true }
         );
