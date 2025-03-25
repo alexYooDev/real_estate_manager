@@ -115,7 +115,7 @@ const updateUserProfile = async (req, res) => {
 const forgotPassword = async (req, res) => {
   try {
     const {email} = req.body;
-    const user = await User.findOne({email});
+    const user = await User.findOne({email: email});
 
     if (!user) {
       return res.status(404).json({message: "User Not Found!"});
@@ -150,6 +150,8 @@ const forgotPassword = async (req, res) => {
              <p>If you didn't request this, ignore this email.</p>`,
     });
 
+    await user.save();
+
     res.json({ message: 'Reset link sent to email!' });
 
   } catch (error) {
@@ -164,7 +166,7 @@ const resetPassword = async (req, res) => {
 
     // Hash the token and search for the user
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
-
+    
     const user = await User.findOne({
       resetPasswordToken: hashedToken,
       // Check if token is still valid
@@ -175,9 +177,7 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({ message: 'Invalid or expired token' });
     }
 
-    // Hash new password and update user
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
+    user.password = newPassword
 
     // Clear reset token fields
     user.resetPasswordToken = undefined;

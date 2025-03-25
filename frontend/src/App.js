@@ -19,20 +19,20 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Main/>}/>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/forgot-password" element={<ForgotPassword/>}/>
-        <Route path="/reset-password" element={<ResetPassword/>} />
-        <Route path="/view-property" element={<PropertiesFeed/>} />
-        <Route path="/view-detail" element={<PropertyDetail/>}/>
-        <Route path="/create-property" element={<CreateProperties/>} />
-        <Route path="/update-property" element={<UpdateProperty/>}/>
-        <Route path="/my-post" element={<MyPropertyPosts/>}/>
-        <Route path='/saved-post' element={<MySavedPosts/>}/>
+        <Route path='/' element={<Main />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password/:token' element={<ResetPassword />} />
+        <Route path='/view-property' element={<PropertiesFeed />} />
+        <Route path='/view-detail' element={<PropertyDetail />} />
+        <Route path='/create-property' element={<CreateProperties />} />
+        <Route path='/update-property' element={<UpdateProperty />} />
+        <Route path='/my-post' element={<MyPropertyPosts />} />
+        <Route path='/saved-post' element={<MySavedPosts />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </Router>
   );
 }
