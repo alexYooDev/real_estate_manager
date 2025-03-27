@@ -36,6 +36,7 @@ const PropertyForm = ({property, isEditting}) => {
   useEffect(() => {
     if (property) {
       setFeatures(property.features);
+      setInspectionSchedule(property.inspectionSchedule)
     }
     setFormData(
       property || {
