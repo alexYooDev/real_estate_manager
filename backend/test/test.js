@@ -86,8 +86,6 @@ describe('Property API Tests', () => {
 
       expect(res.status.calledWith(201)).to.be.true;
 
-      console.log('Actual Response:', res.json.getCall(0)?.args[0]);
-
       expect(
         res.json.calledWithMatch({
           id: mockProperty.id,

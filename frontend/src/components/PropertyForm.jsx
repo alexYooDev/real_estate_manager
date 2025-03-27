@@ -4,6 +4,8 @@ import axiosInstance from '../axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import Error401 from '../pages/Error401';
 
+/* eslint-disable react-hooks/exhaustive-deps  */
+
 const PropertyForm = ({property, isEditting}) => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -35,22 +37,22 @@ const PropertyForm = ({property, isEditting}) => {
     if (property) {
       setFeatures(property.features);
     }
-    
-    setFormData(property || {
-      title: '',
-      description: '',
-      price: 0,
-      area: 0,
-      features: features,
-      location: '',
-      type: 'apartment',
-      bedrooms: '',
-      bathrooms: '',
-      agent: user?.id,
-      inspection: inspectionSchedule,
-      status: 'for sale',
-    });
-
+    setFormData(
+      property || {
+        title: '',
+        description: '',
+        price: 0,
+        area: 0,
+        features: features,
+        location: '',
+        type: 'apartment',
+        bedrooms: '',
+        bathrooms: '',
+        agent: user?.id,
+        inspection: inspectionSchedule,
+        status: 'for sale',
+      }
+    );
   }, [])
 
 

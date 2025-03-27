@@ -3,8 +3,12 @@ import axiosInstance from '../axiosConfig';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps  */
+
 const useFetchProperties = ({pathname}) => {
 
+    
     const {properties, setProperties} = useProperties();
 
     const isSearch = useLocation();

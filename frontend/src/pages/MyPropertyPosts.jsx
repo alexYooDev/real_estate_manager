@@ -5,6 +5,8 @@ import PropertyList from "../components/PropertyList";
 import axiosInstance from "../axiosConfig";
 import Error401 from "./Error401";
 
+/* eslint-disable react-hooks/exhaustive-deps  */
+
 const MyPropertyPosts = () => {
     
     const {user} = useAuth();
