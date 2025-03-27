@@ -7,8 +7,8 @@ mongoose.set('strictQuery', true);
 const connectDB = async () => {
   try {
     await mongoose.connect(
-      'mongodb+srv://alxyoo95:FtjTxvNCmgHrYXVL@cluster0.bas9i.mongodb.net/realestatemanager?retryWrites=true&w=majority&appName=Cluster0'
-    );  // Remove deprecated options
+      process.env.MONGO_URI
+    ); 
     console.log("MongoDB connected successfully");
   } catch (error) {
     console.error("MongoDB connection error:", error.message);

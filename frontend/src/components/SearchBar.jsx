@@ -32,7 +32,7 @@ const SearchBar = () => {
     }));
   };
 
-  const handleSearchClick = async () => {
+  const handleSearchSubmit = async () => {
 
     const query = new URLSearchParams(filters).toString();
     try {
@@ -46,7 +46,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className='p-6'>
+    <form className='p-6' onSubmit={handleSearchSubmit}>
       <div className='flex mb-6'>
         <input
           type='text'
@@ -58,7 +58,6 @@ const SearchBar = () => {
         />
         <div className='flex justify-center'>
           <button
-            onClick={handleSearchClick}
             className='px-6 py-2 text-white bg-blue-500 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
           >
             Search Properties
@@ -70,7 +69,7 @@ const SearchBar = () => {
         onChange={handleFilterChange}
         setFilters={setFilters}
       />
-    </div>
+    </form>
   );
 };
 
