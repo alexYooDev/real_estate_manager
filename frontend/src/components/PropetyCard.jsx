@@ -180,16 +180,15 @@ const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => 
               </span>
             </div>
             <span className='text-xl font-bold text-blue-600'>
-              {/* Rent price is around 1% percent of property price per month */}
               {property.status === 'for rent'
-                ? AUDollar.format((property.price / 12) * 0.01) + ' / Week'
+                ? `${AUDollar.format(property.price)} / Month`
                 : AUDollar.format(property.price)}
             </span>
           </div>
           {property.features.length > 0 && (
             <div>
               <p className='font-semibold'>Key features</p>
-              <ul className='flex'>
+              <ul className='grid grid-cols-4'>
                 {property.features?.map((feat, index) => (
                   <li key={`${feat} ${index}`} className='m-1 list-none'>
                     ✅ {feat}

@@ -27,6 +27,7 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
+  /* get email and password from request */
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -114,7 +115,9 @@ const updateUserProfile = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   try {
+    /* get email input */
     const {email} = req.body;
+    /* if user exists with the same email */
     const user = await User.findOne({email: email});
 
     if (!user) {
@@ -134,6 +137,7 @@ const forgotPassword = async (req, res) => {
     // redirect link for reset password page
     const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
 
+    /* configure administrative email for reset password email genenration */
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -142,6 +146,7 @@ const forgotPassword = async (req, res) => {
       }
     });
 
+    /* send email with the configured email */
     await transporter.sendMail({
       to: email,
       subject: '[Real Estate Manager] Your Password Reset Confirmation',
@@ -215,6 +220,7 @@ const updateSavedPost = async (req, res) => {
       updatedUser =  user;
 
     } else {
+      /* update user collection data's savedProperties field, push a newly saved property's id */
       updatedUser = await User.findByIdAndUpdate(
         req.user.id,
         { $push: { savedProperties: req.body.propertyId } },

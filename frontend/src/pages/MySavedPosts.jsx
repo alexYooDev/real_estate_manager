@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import PropertyList from "../components/PropertyList";
 import { useAuth } from "../context/AuthContext";
-import { useProperties } from "../context/PropertyContext";
 import axiosInstance from "../axiosConfig";
+import Error401 from "./Error401";
 
 const MySavedPosts = () => {
 
@@ -33,9 +33,14 @@ const MySavedPosts = () => {
         fetchSavedProperties();
     }, []);
 
+    /* Remove unsaved property from the view */
     const handleUnsaveProperty = (propertyId) => {
       setSavedProperties((prev) => prev?.filter((p) => p._id !== propertyId));
     };
+
+    if (!user) {
+      return <Error401 />;
+    }
     
     return (
       <div>

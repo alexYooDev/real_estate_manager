@@ -2,7 +2,7 @@ const Property = require('../models/Property');
 const User = require('../models/User')
 
 const createProperty =  async (req, res) => {
-    const {title, description, price, location, type, bedrooms, bathrooms, agent, status} = req.body;
+    const {title, description, price, location, type, area, bedrooms, bathrooms, agent, inspection, status} = req.body;
     
     try {
 
@@ -17,10 +17,12 @@ const createProperty =  async (req, res) => {
             description, 
             price, 
             location, 
+            area,
             type, 
             bedrooms, 
             bathrooms,
             agent, 
+            inspection,
             status
         });
 
@@ -33,10 +35,12 @@ const createProperty =  async (req, res) => {
             description: property.description,
             price: property.price,
             location: property.location,
+            area: property.area,
             type: property.type,
             bedrooms: property.bedrooms,
             bathrooms: property.bathrooms,
             agent: property.agent,
+            inspection: property.inspection || [],
             status: property.status
         });
 

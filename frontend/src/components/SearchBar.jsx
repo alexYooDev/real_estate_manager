@@ -40,10 +40,9 @@ const SearchBar = () => {
       setProperties(response.data);
     } catch (error) {
       console.log(error);
-    } finally {
-      setFilters(initFilters);
-      navigate('/view-property', { state: { isSearch: true } });
     }
+    setFilters(initFilters);
+    navigate('/view-property', { state: { isSearch: true } });
   };
 
   return (

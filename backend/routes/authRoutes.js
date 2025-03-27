@@ -4,12 +4,19 @@ const { registerUser, loginUser, updateUserProfile, getProfile, getUserDetail, u
 const { protect } = require('../middleware/authMiddleware');
 const router = express.Router();
 
+/* Authentication */
 router.post('/register', registerUser);
 router.post('/login', loginUser);
+
+/* Profile */
 router.get('/detail/:id', getUserDetail);
 router.get('/profile', protect, getProfile);
 router.put('/profile', protect, updateUserProfile);
+
+/* Save user's post */
 router.put('/save-post', protect, updateSavedPost);
+
+/* forgot / rest password */
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password/:token', resetPassword)
 

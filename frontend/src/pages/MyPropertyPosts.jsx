@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useProperties } from "../context/PropertyContext";
 import PropertyList from "../components/PropertyList";
 import axiosInstance from "../axiosConfig";
+import Error401 from "./Error401";
 
 const MyPropertyPosts = () => {
     
@@ -18,7 +19,8 @@ const MyPropertyPosts = () => {
             }
           } catch (error) {
             console.log(error.message);
-          } finally {
+          }
+          if (user) {
             setProperties((properties) =>
               properties.filter((property) => property.agent === user.id)
             );
@@ -29,10 +31,14 @@ const MyPropertyPosts = () => {
 
     return (
       <div>
-        <h2 className='m-6 text-2xl font-semibold'>
-          🏡 {user.name}'s Posts
-        </h2>
-        <PropertyList properties={properties} user={user} />
+        { !user ? <Error401/> : 
+        <>
+          <h2 className='m-6 text-2xl font-semibold'>
+            🏡 {user.name}'s Posts
+          </h2>
+          <PropertyList properties={properties} user={user} />
+        </>
+        }
       </div>
     );
 }
