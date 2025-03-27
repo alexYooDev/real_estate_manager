@@ -1,0 +1,341 @@
+[
+  {
+    "title": "House in Prime Location",
+    "description": "A spacious family home with a large backyard, perfect for entertaining guests and relaxing.",
+    "price": 5197,
+    "location": "South Brisbane, Brisbane, QLD, Australia",
+    "type": "house",
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "area": 466,
+    "features": [
+      "Public transport nearby",
+      "Swimming pool access",
+      "Smart home system",
+      "Hardwood flooring",
+      "Gym facilities"
+    ],
+    "agent": "67d95f3524f3aeded1e1023c",
+    "status": "for rent",
+    "inspection": ["2025-04-18 5:00 PM", "2025-04-25 10:00 AM"]
+  },
+  {
+    "title": "Apartment in Prime Location",
+    "description": "A stylish and contemporary apartment offering breathtaking city views and modern amenities.",
+    "price": 2941,
+    "location": "West End, Brisbane, QLD, Australia",
+    "type": "apartment",
+    "bedrooms": 4,
+    "bathrooms": 1,
+    "area": 280,
+    "features": [
+      "Hardwood flooring",
+      "Smart home system",
+      "Central heating",
+      "Pet-friendly",
+      "High-speed internet",
+      "Swimming pool access",
+      "Public transport nearby"
+    ],
+    "agent": "67d95f3524f3aeded1e1023c",
+    "status": "for rent",
+    "inspection": [
+      "2025-04-12 10:00 AM",
+      "2025-03-29 5:00 PM",
+      "2025-04-12 3:30 PM"
+    ]
+  },
+  {
+    "title": "Office in Prime Location",
+    "description": "A prime office space in a central business district, ideal for startups and established businesses alike.",
+    "price": 6610,
+    "location": "Kangaroo Point, Brisbane, QLD, Australia",
+    "type": "office",
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "area": 257,
+    "features": [
+      "Hardwood flooring",
+      "Swimming pool access",
+      "24/7 security",
+      "Gym facilities"
+    ],
+    "agent": "67cd45ece52848e1ff3038ff",
+    "status": "for rent",
+    "inspection": [
+      "2025-04-19 5:00 PM",
+      "2025-04-24 5:00 PM",
+      "2025-04-21 3:30 PM",
+      "2025-04-02 10:00 AM",
+      "2025-04-23 1:00 PM"
+    ]
+  },
+  {
+    "title": "House in Prime Location",
+    "description": "A spacious family home with a large backyard, perfect for entertaining guests and relaxing.",
+    "price": 1943504,
+    "location": "New Farm, Brisbane, QLD, Australia",
+    "type": "house",
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "area": 315,
+    "features": [
+      "Central heating",
+      "Swimming pool access",
+      "Balcony with city views",
+      "Secure parking",
+      "Gym facilities"
+    ],
+    "agent": "67cd45ece52848e1ff3038ff",
+    "status": "for sale",
+    "inspection": [
+      "2025-04-14 1:00 PM",
+      "2025-04-03 5:00 PM",
+      "2025-03-27 5:00 PM"
+    ]
+  },
+  {
+    "title": "Office in Prime Location",
+    "description": "A prime office space in a central business district, ideal for startups and established businesses alike.",
+    "price": 1524102,
+    "location": "Spring Hill, Brisbane, QLD, Australia",
+    "type": "office",
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "area": 173,
+    "features": [
+      "Secure parking",
+      "Swimming pool access",
+      "Smart home system",
+      "Conference room",
+      "Pet-friendly",
+      "Modern kitchen",
+      "Spacious living room"
+    ],
+    "agent": "67d95f3524f3aeded1e1023c",
+    "status": "sold",
+    "inspection": [
+      "2025-04-12 10:00 AM",
+      "2025-04-10 3:30 PM",
+      "2025-03-31 3:30 PM"
+    ]
+  },
+  {
+    "title": "House in Prime Location",
+    "description": "A spacious family home with a large backyard, perfect for entertaining guests and relaxing.",
+    "price": 1270987,
+    "location": "Paddington, Brisbane, QLD, Australia",
+    "type": "house",
+    "bedrooms": 2,
+    "bathrooms": 3,
+    "area": 263,
+    "features": [
+      "Secure parking",
+      "Public transport nearby",
+      "Swimming pool access",
+      "Renovated interiors",
+      "Pet-friendly",
+      "Modern kitchen"
+    ],
+    "agent": "67cd45ece52848e1ff3038ff",
+    "status": "sold",
+    "inspection": ["2025-04-05 5:00 PM", "2025-03-28 1:00 PM"]
+  },
+  {
+    "title": "House in Prime Location",
+    "description": "A spacious family home with a large backyard, perfect for entertaining guests and relaxing.",
+    "price": 4503,
+    "location": "Fortitude Valley, Brisbane, QLD, Australia",
+    "type": "house",
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "area": 395,
+    "features": [
+      "Hardwood flooring",
+      "Central heating",
+      "Balcony with city views",
+      "Smart home system",
+      "Swimming pool access",
+      "High-speed internet",
+      "Gym facilities"
+    ],
+    "agent": "67d95f3524f3aeded1e1023c",
+    "status": "for rent",
+    "inspection": [
+      "2025-04-02 3:30 PM",
+      "2025-04-02 3:30 PM",
+      "2025-04-03 3:30 PM",
+      "2025-04-20 5:00 PM"
+    ]
+  },
+  {
+    "title": "Office in Prime Location",
+    "description": "A prime office space in a central business district, ideal for startups and established businesses alike.",
+    "price": 2628393,
+    "location": "Teneriffe, Brisbane, QLD, Australia",
+    "type": "office",
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "area": 357,
+    "features": [
+      "Central heating",
+      "24/7 security",
+      "High-speed internet",
+      "Energy-efficient appliances",
+      "Modern kitchen",
+      "Close to shopping centers",
+      "Renovated interiors"
+    ],
+    "agent": "67cd45ece52848e1ff3038ff",
+    "status": "for sale",
+    "inspection": [
+      "2025-04-06 1:00 PM",
+      "2025-04-11 3:30 PM",
+      "2025-03-28 10:00 AM",
+      "2025-04-25 3:30 PM"
+    ]
+  },
+  {
+    "title": "Apartment in Prime Location",
+    "description": "A stylish and contemporary apartment offering breathtaking city views and modern amenities.",
+    "price": 390292,
+    "location": "Bulimba, Brisbane, QLD, Australia",
+    "type": "apartment",
+    "bedrooms": 5,
+    "bathrooms": 2,
+    "area": 77,
+    "features": [
+      "Fireplace",
+      "Energy-efficient appliances",
+      "High-speed internet",
+      "Public transport nearby",
+      "Elevator access"
+    ],
+    "agent": "67d01a96dfb5e2eaf3df800e",
+    "status": "sold",
+    "inspection": ["2025-04-24 3:30 PM", "2025-04-09 1:00 PM"]
+  },
+  {
+    "title": "Office in Prime Location",
+    "description": "A prime office space in a central business district, ideal for startups and established businesses alike.",
+    "price": 1991768,
+    "location": "Woolloongabba, Brisbane, QLD, Australia",
+    "type": "office",
+    "bedrooms": 3,
+    "bathrooms": 3,
+    "area": 433,
+    "features": [
+      "Conference room",
+      "Large windows with natural light",
+      "Central heating",
+      "Swimming pool access"
+    ],
+    "agent": "67d95f3524f3aeded1e1023c",
+    "status": "sold",
+    "inspection": ["2025-04-19 5:00 PM", "2025-04-13 1:00 PM"]
+  },
+  {
+    "title": "Apartment in Prime Location",
+    "description": "A stylish and contemporary apartment offering breathtaking city views and modern amenities.",
+    "price": 2107,
+    "location": "St Lucia, Brisbane, QLD, Australia",
+    "type": "apartment",
+    "bedrooms": 1,
+    "bathrooms": 3,
+    "area": 303,
+    "features": [
+      "Fireplace",
+      "Pet-friendly",
+      "Gym facilities",
+      "24/7 security",
+      "Hardwood flooring",
+      "Renovated interiors"
+    ],
+    "agent": "67cd45ece52848e1ff3038ff",
+    "status": "for rent",
+    "inspection": [
+      "2025-03-27 1:00 PM",
+      "2025-03-28 5:00 PM",
+      "2025-04-13 3:30 PM"
+    ]
+  },
+  {
+    "title": "House in Prime Location",
+    "description": "A spacious family home with a large backyard, perfect for entertaining guests and relaxing.",
+    "price": 1806723,
+    "location": "Sunnybank, Brisbane, QLD, Australia",
+    "type": "house",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 53,
+    "features": [
+      "Elevator access",
+      "Hardwood flooring",
+      "Conference room",
+      "Open-plan workspace",
+      "24/7 security",
+      "Secure parking"
+    ],
+    "agent": "67d01a96dfb5e2eaf3df800e",
+    "status": "sold",
+    "inspection": [
+      "2025-04-11 3:30 PM",
+      "2025-04-12 1:00 PM",
+      "2025-04-11 10:00 AM",
+      "2025-04-03 10:00 AM",
+      "2025-04-22 3:30 PM"
+    ]
+  },
+  {
+    "title": "Apartment in Prime Location",
+    "description": "A stylish and contemporary apartment offering breathtaking city views and modern amenities.",
+    "price": 3188,
+    "location": "Chermside, Brisbane, QLD, Australia",
+    "type": "apartment",
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "area": 93,
+    "features": [
+      "Energy-efficient appliances",
+      "Public transport nearby",
+      "Balcony with city views",
+      "Large windows with natural light",
+      "Fireplace",
+      "High-speed internet"
+    ],
+    "agent": "67d95f3524f3aeded1e1023c",
+    "status": "for rent",
+    "inspection": [
+      "2025-04-23 1:00 PM",
+      "2025-04-10 10:00 AM",
+      "2025-04-18 3:30 PM",
+      "2025-04-05 1:00 PM"
+    ]
+  },
+  {
+    "title": "Apartment in Prime Location",
+    "description": "A stylish and contemporary apartment offering breathtaking city views and modern amenities.",
+    "price": 445257,
+    "location": "Carindale, Brisbane, QLD, Australia",
+    "type": "apartment",
+    "bedrooms": 1,
+    "bathrooms": 4,
+    "area": 204,
+    "features": [
+      "Gym facilities",
+      "Close to shopping centers",
+      "Spacious living room",
+      "Conference room",
+      "Open-plan workspace",
+      "24/7 security"
+    ],
+    "agent": "67d01a96dfb5e2eaf3df800e",
+    "status": "for sale",
+    "inspection": [
+      "2025-04-12 1:00 PM",
+      "2025-04-10 3:30 PM",
+      "2025-04-03 3:30 PM",
+      "2025-04-15 3:30 PM"
+    ]
+  }
+]

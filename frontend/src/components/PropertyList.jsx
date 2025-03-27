@@ -2,7 +2,7 @@ import PropertyCard from "./PropetyCard";
 import { useProperties } from "../context/PropertyContext";
 import { useCallback } from "react";
 
-const PropertyList = ({user, properties}) => {
+const PropertyList = ({user, properties, onUnsave, savedProperties}) => {
 
     const { setProperties } = useProperties();
 
@@ -14,13 +14,26 @@ const PropertyList = ({user, properties}) => {
     );
 
     return (
-        <>
-        {properties.length === 0 && <h3 className="text-lg font-bold text-center">No Proproperties Found</h3>}
-            <div>
-                {properties.map((property) => <PropertyCard key={property._id} property={property} user={user} onDelete={handleDeleteProperty} />)}
-            </div>
-        </>
-    )
+      <>
+        {properties?.length === 0 && (
+          <h3 className='text-lg font-bold text-center'>
+            No Proproperties Found
+          </h3>
+        )}
+        <div>
+          {properties?.map((property) => (
+            <PropertyCard
+              key={property._id}
+              property={property}
+              savedProperties={savedProperties}
+              user={user}
+              onUnsave={onUnsave}
+              onDelete={handleDeleteProperty}
+            />
+          ))}
+        </div>
+      </>
+    );
 };
 
 export default PropertyList;

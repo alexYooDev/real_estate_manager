@@ -33,16 +33,16 @@ const SearchBar = () => {
   };
 
   const handleSearchClick = async () => {
+
     const query = new URLSearchParams(filters).toString();
     try {
       const response = await axiosInstance.get(`/api/search-property?${query}`);
       setProperties(response.data);
     } catch (error) {
       console.log(error);
-    } finally {
-      setFilters(initFilters);
-      navigate('/view-property', { state: { isSearch: true } });
     }
+    setFilters(initFilters);
+    navigate('/view-property', { state: { isSearch: true } });
   };
 
   return (

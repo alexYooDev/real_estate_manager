@@ -11,6 +11,7 @@ const PropertiesFeed = () => {
     const pathname = useLocation();
     const { properties } = useProperties();
 
+    /* fetch all properties for all including visitors */
     useFetchProperties(pathname);
 
     return (

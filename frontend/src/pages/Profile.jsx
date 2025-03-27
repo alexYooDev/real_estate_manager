@@ -11,9 +11,13 @@ const Profile = () => {
   });
   const [loading, setLoading] = useState(false);
 
+
   useEffect(() => {
-    // Fetch profile data from the backend
+
+    /* Fetch user's detail from the server */
     const fetchProfile = async () => {
+
+      /* loading state to true to wait for data retrieval */
       setLoading(true);
       try {
         const response = await axiosInstance.get('/api/auth/profile', {
@@ -27,6 +31,7 @@ const Profile = () => {
       } catch (error) {
         alert('Failed to fetch profile. Please try again.');
       } finally {
+        /* set loading to false when fetching is done or encountered error */
         setLoading(false);
       }
     };
@@ -59,8 +64,8 @@ const Profile = () => {
         <h1 className='mb-4 text-2xl font-bold text-center'>Your Profile</h1>
         <label htmlFor='name'>Name</label>
         <input
-          id='name'
           type='text'
+          id='name'
           placeholder='Name'
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -74,14 +79,20 @@ const Profile = () => {
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           className='w-full p-2 mb-4 border rounded'
         />
-        <label htmlFor='agency'>Agency</label>
-        <input
-          type='text'
-          placeholder='Agency'
-          value={formData.agency}
-          onChange={(e) => setFormData({ ...formData, agency: e.target.value })}
-          className='w-full p-2 mb-4 border rounded'
-        />
+        {user.role === 'agent' && (
+          <>
+            <label htmlFor='agency'>Agency</label>
+            <input
+              type='text'
+              placeholder='Agency'
+              value={formData.agency}
+              onChange={(e) =>
+                setFormData({ ...formData, agency: e.target.value })
+              }
+              className='w-full p-2 mb-4 border rounded'
+            />
+          </>
+        )}
         <button
           type='submit'
           className='w-full p-2 text-white bg-blue-600 rounded'

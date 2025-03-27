@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
 import { useNavigate } from 'react-router-dom';
+import Error401 from '../pages/Error401';
 
 const PropertyForm = ({property, isEditting}) => {
   const { user } = useAuth();
@@ -10,16 +11,21 @@ const PropertyForm = ({property, isEditting}) => {
   const [feature, setFeature] = useState("");
   const [features, setFeatures] = useState([]);
 
+  const [availableDate, setAvailableDate] = useState();
+  const [inspectionSchedule, setInspectionSchedule] = useState([]);
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    price: '',
+    price: 0,
     location: '',
+    area: 0,
     features: features,
     type: 'apartment',
     bedrooms: '',
     bathrooms: '',
-    agent: user.id,
+    agent: user?.id,
+    inspection:inspectionSchedule,
     status: '',
   });
 
@@ -29,22 +35,23 @@ const PropertyForm = ({property, isEditting}) => {
     if (property) {
       setFeatures(property.features);
     }
+    
+    setFormData(property || {
+      title: '',
+      description: '',
+      price: 0,
+      area: 0,
+      features: features,
+      location: '',
+      type: 'apartment',
+      bedrooms: '',
+      bathrooms: '',
+      agent: user?.id,
+      inspection: inspectionSchedule,
+      status: 'for sale',
+    });
 
-    setFormData(
-      property || {
-        title: '',
-        description: '',
-        price: '',
-        features: features,
-        location: '',
-        type: 'apartment',
-        bedrooms: '',
-        bathrooms: '',
-        agent: user.id,
-        status: 'for sale',
-      }
-    );
-  }, [features, property, user.id]);
+  }, [])
 
 
   // this runs every time features state updates
@@ -57,7 +64,7 @@ const PropertyForm = ({property, isEditting}) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const addFeature = (e) => {
+  const handleAddFeature = (e) => {
     e.preventDefault();
     if (feature.trim()) {
       setFeatures((prev) => [...prev, feature]); // Add new feature to the array
@@ -65,36 +72,53 @@ const PropertyForm = ({property, isEditting}) => {
     }
   };
 
-  const removeFeature = (index) => {
+  const handleAddDate = (e) => {
+    e.preventDefault();
+    if (availableDate) {
+      setInspectionSchedule((prev) => [...prev, availableDate]);
+    }
+  }
+
+  const handleRemoveFeature = (index) => {
     setFeatures((prev) => prev.filter((_, i) => i !== index));
   };
+
+  const handleRemoveSchedule = (index) => {
+    setInspectionSchedule((prev) => prev.filter((_,i) => i !== index))
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let response;
 
-    console.log(formData)
-
     try {
       if (isEditting) {
         // only update property post when updating
-        response = await axiosInstance.post(`/api/update-property/${formData._id}`, formData);
+        response = await axiosInstance.put(`/api/update-property/${formData._id}`, formData);
+
+        if (response.data) {
+          alert('You have successfully updated the post!');
+          navigate('/view-property');
+        }
         
       } else {
         // only create new property post when not updating
         response = await axiosInstance.post('/api/create-property', formData);
+        console.log(response.message);
+        alert('You have successfully created the post!');
+        navigate('/view-property');
       }
     } catch(error) {
       console.log(error);
-    } finally {
-      if (response.data) {
-        navigate('/view-property');
-      }
-    }
-    
-  };
+    } 
 
+  };
+  
+  if (!user) {
+    return <Error401/>
+  }
+  
   return (
     <form
       onSubmit={handleSubmit}
@@ -200,12 +224,25 @@ const PropertyForm = ({property, isEditting}) => {
         className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
         required
       />
+      <label htmlFor='area' className='block mb-2 text-sm font-medium'>
+        Area (Square meters):
+      </label>
+      <input
+        type='number'
+        id='area'
+        name='area'
+        placeholder='Enter the Area'
+        value={formData.area}
+        onChange={handleChange}
+        className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+        required
+      />
       {/* Features */}
       <div>
+        <label className='block mb-2 text-sm font-medium' htmlFor='features'>
+          Features:
+        </label>
         <div className='flex items-center gap-1 mb-1'>
-          <label className='block mb-2 text-sm font-medium' htmlFor='features'>
-            Features:
-          </label>
           <input
             id='features'
             type='text'
@@ -215,8 +252,8 @@ const PropertyForm = ({property, isEditting}) => {
             placeholder='Enter feature'
           />
           <button
-            className='p-1 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
-            onClick={addFeature}
+            className='p-3 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            onClick={handleAddFeature}
           >
             Add Feature
           </button>
@@ -224,9 +261,12 @@ const PropertyForm = ({property, isEditting}) => {
         <div className='mb-3'>
           <ul className='flex gap-3'>
             {features.map((feat, index) => (
-              <li key={index}>
+              <li key={`${feat} ${index}`}>
                 {feat}{' '}
-                <button className='ml-1' onClick={() => removeFeature(index)}>
+                <button
+                  className='ml-1'
+                  onClick={() => handleRemoveFeature(index)}
+                >
                   ❌
                 </button>
               </li>
@@ -260,6 +300,43 @@ const PropertyForm = ({property, isEditting}) => {
         className='w-full p-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
         required
       />
+      {/* Inspection */}
+      <div>
+        <label className='block mb-2 text-sm font-medium' htmlFor='features'>
+          Set Available Date & Time for Inspection
+        </label>
+        <div className='flex items-center gap-1 mb-1'>
+          <input
+            id='features'
+            type='datetime-local'
+            className='w-4/5 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+            value={availableDate}
+            onChange={(e) => setAvailableDate(e.target.value)}
+            placeholder='Enter feature'
+          />
+          <button
+            className='p-3 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            onClick={handleAddDate}
+          >
+            Add Date & Time
+          </button>
+        </div>
+        <div className='mb-3'>
+          <ul className='flex gap-3'>
+            {inspectionSchedule.map((dt, index) => (
+              <li key={`${dt} ${index}`}>
+                {new Date(dt).toLocaleString('en-AU')}
+                <button
+                  className='ml-1'
+                  onClick={() => handleRemoveSchedule(index)}
+                >
+                  ❌
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
       <button
         type='submit'
         className='w-full py-3 text-lg font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'

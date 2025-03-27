@@ -1,10 +1,38 @@
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
+import { useEffect, useState } from 'react';
 
-const PropertyCard = ({property, user, onDelete}) => {
+const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => {
 
   const navigate = useNavigate();
 
+  const [isSaved, setIsSaved] = useState(user?.savedProperties);
+  const [agent, setAgent] = useState({});
+
+  useEffect(() => {
+    /* Fetch agent profile detail data to be displayed and used in the frontend side */
+    const fetchAgentProfile = async () => {
+      try {
+        const response = await axiosInstance(
+          `/api/auth/detail/${property.agent}`
+        );
+        setAgent(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAgentProfile();
+
+    /* store user's saved properties in localStorage when this component mounts */
+    const savedFromLocalStorage = Object.keys(localStorage).filter(
+      (key) => localStorage.getItem(key) === 'saved'
+    );
+    setIsSaved(savedFromLocalStorage);
+    
+  }, []);
+
+
+  /* Format price with dollar currecy representation */
   const AUDollar = new Intl.NumberFormat('en-US', {
     style: 'currency', 
     currency: 'AUD',
@@ -12,17 +40,81 @@ const PropertyCard = ({property, user, onDelete}) => {
     minimumFractionDigits: 0,
   });
 
+
   const handleClickDetail = () => {
-    navigate('/view-detail', {state: {property: property}});
+    navigate('/view-detail', { state: { property: property, agent: agent } });
   };
 
-  // const handleClickSave = async () => {
-  //   try {
+  const handleClickSave = async () => {
 
-  //   } catch(error) {
+    try {
+      let proceed = false;
 
-  //   }
-  // };
+      if (!user) {
+        proceed = window.confirm("You need to login to save the post!");
+      } 
+
+      if (proceed) {
+        navigate('/login')
+      }
+
+      if (user) {
+        await axiosInstance.put(
+          '/api/auth/save-post',
+          { propertyId: property._id },
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        );
+        
+        /* Apply visual change to the frontend saved property list */
+        setIsSaved((prev = []) => {
+          /* is there are such proeperties, set saved properties else leave empty */
+          let updatedSaved = Array.isArray(prev) ? [...prev] : [];
+
+          /* if there is a such property item's id saved in local storage, unsave*/
+          if (localStorage.getItem(property._id)) {
+            localStorage.removeItem(property._id);
+
+            /* remove item from the view */
+            updatedSaved = updatedSaved.filter((id) => id !== property._id);
+            if (onUnsave) onUnsave(property._id);
+
+          /* if there is no such property, save to the local storage */
+          } else {
+            localStorage.setItem(property._id, 'saved');
+            updatedSaved.push(property._id);
+          }
+          return updatedSaved;
+        });
+      }
+      
+    } catch(error) {
+      console.log(error.message);
+    } 
+  };
+
+  const handleClickContact = () => {
+    let proceed;
+
+    /* prompt user to login in to contact agent for inquiry */
+    if (!user) {
+      proceed = window.confirm('You need to login to contact the agent!');
+    }
+
+    /* if user answered yes, the navigate to login page */
+    if (proceed) {
+      navigate('/login');
+    }
+
+    if (user) {
+      const title = encodeURIComponent(`[${user.name}] Property Inquiry`);
+      const body = encodeURIComponent(
+        `Hi! I am interested in inquiring about your property at ${property.location}.\n Please let me know more details!`
+      );
+      window.location.href = `mailto:${agent.email}?subject=${title}&body=${body}`;
+    }
+  }
 
   const handleClickDelete = async () => {
 
@@ -30,11 +122,11 @@ const PropertyCard = ({property, user, onDelete}) => {
 
     if (proceed) {
       try {
-          await axiosInstance.post('/api/delete-property', {_id: property._id});
+          await axiosInstance.delete('/api/delete-property', {_id: property._id});
           onDelete(property._id);
         } catch(error) {
-            console.log(error);
-          }
+          alert(error.message);
+        }
     }
   };
 
@@ -98,17 +190,20 @@ const PropertyCard = ({property, user, onDelete}) => {
                 {property.bathrooms}
               </span>
             </div>
-
             <span className='text-xl font-bold text-blue-600'>
-              {AUDollar.format(property.price)}
+              {property.status === 'for rent'
+                ? `${AUDollar.format(property.price)} / Month`
+                : AUDollar.format(property.price)}
             </span>
           </div>
           {property.features.length > 0 && (
             <div>
               <p className='font-semibold'>Key features</p>
-              <ul className='flex'>
-                {property.features?.map((feat) => (
-                  <li className='m-1 list-none'>✅ {feat}</li>
+              <ul className='grid grid-cols-4'>
+                {property.features?.map((feat, index) => (
+                  <li key={`${feat} ${index}`} className='m-1 list-none'>
+                    ✅ {feat}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -122,13 +217,20 @@ const PropertyCard = ({property, user, onDelete}) => {
                 View Details
               </button>
               {/* show only when it is not my created post */}
-              { property.agent !== user?.id && 
-                  <button className='px-4 py-2 mt-4 text-white transition bg-blue-500 hover:bg-blue-600'>
-                    Contact Agent
-                  </button>
-              }
-              <button className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-r-lg hover:bg-blue-600'>
-                Save Post
+
+              {property.agent !== user?.id && (
+                <button
+                  className='px-4 py-2 mt-4 text-white transition bg-blue-500 hover:bg-blue-600'
+                  onClick={handleClickContact}
+                >
+                  Contact Agent
+                </button>
+              )}
+              <button
+                className='px-4 py-2 mt-4 text-white transition bg-blue-500 rounded-r-lg hover:bg-blue-600'
+                onClick={handleClickSave}
+              >
+                {isSaved?.includes(property._id) ? 'Unsave Post' : 'Save Post'}
               </button>
             </div>
             {property.agent === user?.id && (

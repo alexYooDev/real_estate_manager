@@ -1,4 +1,4 @@
-export const validateForm = (formData) => {
+export const validateForm = (formData, checkPassword) => {
     let errors = {};
 
     if (!formData.name.trim()) {
@@ -17,6 +17,8 @@ export const validateForm = (formData) => {
         errors.password = "You must enter your password";
     } else if (!PASS_REGEX.test(formData.password)) {
         errors.password = "Your password must be at least 8 characters long and contain uppercase, lowercase, number, and special character."
+    } else if (formData.password !== checkPassword) {
+        errors.checkPassword = "You're password do not match the confirmation password"
     }
 
     if (!formData.role) {

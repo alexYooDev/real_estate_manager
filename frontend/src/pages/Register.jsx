@@ -5,21 +5,20 @@ import useFormValition from '../hooks/useFormValidation';
 import { validateForm } from '../utils/validateForm';
 
 const Register = () => {
-
-  // role added to the formData state
-
+  
   // form validation hook 
-  const {formData, errors, handleChange, isValidated, isAgent } = useFormValition(
+  const {formData, checkPassword, errors, handleChange, isValidated, isAgent } = useFormValition(
     {name: "", email: "", password: "", agency: "", role: ""}, 
     validateForm
   );
+
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    console.log(formData.password, checkPassword);
     
     try {
 
@@ -35,7 +34,7 @@ const Register = () => {
   };
 
   return (
-    <div className='max-w-md mx-auto mt-20'>
+    <div className='max-w-md min-h-screen mx-auto mt-20'>
       <form onSubmit={handleSubmit} className='p-6 bg-white rounded shadow-md'>
         <h1 className='mb-4 text-2xl font-bold text-center'>Register</h1>
         <input
@@ -67,6 +66,17 @@ const Register = () => {
         {errors.password && (
           <p className='text-sm text-red-500'>{errors.password}</p>
         )}
+        <input
+          type='password'
+          name='checkPassword'
+          placeholder='Enter the password again'
+          value={checkPassword}
+          onChange={handleChange}
+          className='w-full p-2 mt-4 border rounded'
+        />
+        {errors.checkPassword && (
+          <p className='text-sm text-red-500'>{errors.checkPassword}</p>
+        )}
         <label htmlFor='role'>I am signing up as: </label>
         {/* select / option components to allow users to choose role */}
         <select
@@ -90,7 +100,7 @@ const Register = () => {
               placeholder='Agency'
               value={formData.agency}
               onChange={handleChange}
-              className='w-full p-2 m-2 border rounded'
+              className='w-full p-2 my-3 border rounded'
             />
           </>
         )}

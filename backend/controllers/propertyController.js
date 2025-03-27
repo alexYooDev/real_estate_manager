@@ -2,7 +2,7 @@ const Property = require('../models/Property');
 const User = require('../models/User')
 
 const createProperty =  async (req, res) => {
-    const {title, description, price, location, type, bedrooms, bathrooms, agent, status} = req.body;
+    const {title, description, price, location, type, area, bedrooms, bathrooms, agent, inspection, status} = req.body;
     
     try {
 
@@ -17,10 +17,12 @@ const createProperty =  async (req, res) => {
             description, 
             price, 
             location, 
+            area,
             type, 
             bedrooms, 
             bathrooms,
             agent, 
+            inspection,
             status
         });
 
@@ -33,10 +35,12 @@ const createProperty =  async (req, res) => {
             description: property.description,
             price: property.price,
             location: property.location,
+            area: property.area,
             type: property.type,
             bedrooms: property.bedrooms,
             bathrooms: property.bathrooms,
             agent: property.agent,
+            inspection: property.inspection || [],
             status: property.status
         });
 
@@ -46,24 +50,44 @@ const createProperty =  async (req, res) => {
 };
 
 const getPropertiesAll = async (_, res) => {
+
+    
     try {
-        const properties = await Property.find();
+    const properties = await Property.find();
 
         if (!properties) {
             return res.status(404).json({message: 'No properties found.'});
         }
 
-        res.status(200).json(properties);
-
+    res.status(200).json(properties);
         
     } catch(error) {
         return res.status(500).json({message: error.message});
     }
 };
 
+const getSavedProperties = async (req, res) => {
+
+    try {
+
+        const userId = req.user._id;
+        const user = await User.findById(userId);
+        
+        const savedProperties = await Property.find({_id: { $in: user.savedProperties }})
+        
+        if (savedProperties) {
+            return res.status(200).json(savedProperties);
+        } else {
+            return res.status(404).json({message: 'There is no saved property!'})
+        }
+    } catch(error) {
+        return res.status(500).json({message: error.message});
+    }
+}
+
 const searchProperty = async (req, res) => {
     
-    const { price, location, type, bedrooms, bathrooms, status, agent} = req.query;
+    const { price, location, type, bedrooms, bathrooms, status, agent } = req.query;
 
     let filter = {}
 
@@ -95,7 +119,7 @@ const searchProperty = async (req, res) => {
 
 const updateProperty = async (req, res) => {
 
-     try {
+   try {
 
         const updatedProperty = await Property.findByIdAndUpdate(
           req.params.id,
@@ -125,4 +149,4 @@ const deleteProperty = async (req,res) => {
     }
 }
 
-module.exports = {createProperty, getPropertiesAll, searchProperty, updateProperty, deleteProperty};
+module.exports = {createProperty, getPropertiesAll, getSavedProperties, searchProperty, updateProperty, deleteProperty};
