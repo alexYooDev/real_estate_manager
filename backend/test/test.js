@@ -17,19 +17,21 @@ const {
   deleteProperty,
 } = require('../controllers/propertyController');
 
+
 const { expect } = chai;
 
 chai.use(chaiHttp);
 let server;
 let port;
 
+
 // Mock property response
+
 const res = {
   status: sinon.stub().returnsThis(),
   json: sinon.spy(),
 };
 
-// Mock property request
 const req = {
   body: {
     title: 'Property Title',

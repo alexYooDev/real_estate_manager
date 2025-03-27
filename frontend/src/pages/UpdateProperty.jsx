@@ -3,13 +3,18 @@ import PropertyForm from "../components/PropertyForm";
 import { useLocation } from "react-router";
 
 const UpdateProperty = () => {
-    const {state: { property }} = useLocation();
-    const [isEditting, setIsEditting] = useState(true);
+  const {
+    state: { property },
+  } = useLocation();
 
-    
-    return <div className='container p-6 mx-auto'>
-        <PropertyForm property={property} isEditting={isEditting}/>
-    </div>;
+  // eslint-disable-next-line no-unused-vars
+  const [isEditting, setIsEditting] = useState(true);
+
+  return (
+    <div className='container p-6 mx-auto'>
+      <PropertyForm property={property} isEditting={isEditting} />
+    </div>
+  );
 }
 
 export default UpdateProperty;

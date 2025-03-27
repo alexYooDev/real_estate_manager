@@ -4,10 +4,10 @@ const Footer = () => {
         <div className="flex flex-col">
         <ul className="flex justify-center gap-3">
           <li>
-            <a href='#'>Privacy Policy</a>
+            <p>Privacy Policy</p>
           </li>
           <li>
-            <a href='#'>Contact Us</a>
+            <p>Contact Us</p>
           </li>
         </ul>
         <p className="text-center">&copy; 2025 Real Estate Manager. All rights reserved.</p>
