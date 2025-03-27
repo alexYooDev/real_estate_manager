@@ -13,6 +13,7 @@ const ResetPassword = () => {
 
     e.preventDefault();
     try {
+      /* confirm if the users initial password input equals to confirmation password entered later */
       if (newPassword.password === newPassword.confirmPassword) {
         const response = await axiosInstance.post(
           `/api/auth/reset-password/${token}`,
@@ -30,7 +31,7 @@ const ResetPassword = () => {
 
   const handleChange = (e) => {
     const {name, value} = e.target;
-    setNewPassword((prev) => ({...prev, [name]: value}))
+    setNewPassword((prev) => ({...prev, [name]: value}));
   }
 
   return (

@@ -16,7 +16,6 @@ const {
   updateProperty,
   deleteProperty,
 } = require('../controllers/propertyController');
-const { inspect } = require('util');
 
 const { expect } = chai;
 

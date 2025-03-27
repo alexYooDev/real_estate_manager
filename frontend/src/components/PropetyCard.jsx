@@ -10,6 +10,7 @@ const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => 
   const [agent, setAgent] = useState({});
 
   useEffect(() => {
+    /* Fetch agent profile detail data to be displayed and used in the frontend side */
     const fetchAgentProfile = async () => {
       try {
         const response = await axiosInstance(
@@ -22,6 +23,7 @@ const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => 
     };
     fetchAgentProfile();
 
+    /* store user's saved properties in localStorage when this component mounts */
     const savedFromLocalStorage = Object.keys(localStorage).filter(
       (key) => localStorage.getItem(key) === 'saved'
     );
@@ -30,12 +32,14 @@ const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => 
   }, []);
 
 
+  /* Format price with dollar currecy representation */
   const AUDollar = new Intl.NumberFormat('en-US', {
     style: 'currency', 
     currency: 'AUD',
     maximumFractionDigits: 0,
     minimumFractionDigits: 0,
   });
+
 
   const handleClickDetail = () => {
     navigate('/view-detail', { state: { property: property, agent: agent } });
@@ -63,15 +67,20 @@ const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => 
           }
         );
         
+        /* Apply visual change to the frontend saved property list */
         setIsSaved((prev = []) => {
+          /* is there are such proeperties, set saved properties else leave empty */
           let updatedSaved = Array.isArray(prev) ? [...prev] : [];
 
+          /* if there is a such property item's id saved in local storage, unsave*/
           if (localStorage.getItem(property._id)) {
             localStorage.removeItem(property._id);
-            updatedSaved = updatedSaved.filter((id) => id !== property._id);
 
+            /* remove item from the view */
+            updatedSaved = updatedSaved.filter((id) => id !== property._id);
             if (onUnsave) onUnsave(property._id);
 
+          /* if there is no such property, save to the local storage */
           } else {
             localStorage.setItem(property._id, 'saved');
             updatedSaved.push(property._id);
@@ -88,10 +97,12 @@ const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => 
   const handleClickContact = () => {
     let proceed;
 
+    /* prompt user to login in to contact agent for inquiry */
     if (!user) {
       proceed = window.confirm('You need to login to contact the agent!');
     }
 
+    /* if user answered yes, the navigate to login page */
     if (proceed) {
       navigate('/login');
     }

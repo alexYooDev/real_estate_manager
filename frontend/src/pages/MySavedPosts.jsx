@@ -11,6 +11,7 @@ const MySavedPosts = () => {
     const [savedProperties ,setSavedProperties] = useState();
 
     useEffect(() => {
+        /* send user's saved property posts request with user token*/
         const fetchSavedProperties = async () => {
           try {
             setIsLoading(true);
@@ -43,7 +44,7 @@ const MySavedPosts = () => {
     }
     
     return (
-      <div>
+      <div className='min-h-screen mx-auto mt-20'>
         <h2 className='m-6 text-2xl font-semibold'>
           🚩 {user.name}'s Saved Posts
         </h2>
@@ -57,7 +58,13 @@ const MySavedPosts = () => {
             user={user}
           />
         )}
-        {!savedProperties && <p>No Saved Properties Found!</p>}
+        {!savedProperties && (
+          <div>
+            <p className='m-6 text-2xl font-semibold'>
+              No Saved Properties Found!
+            </p>
+          </div>
+        )}
       </div>
     );
 }

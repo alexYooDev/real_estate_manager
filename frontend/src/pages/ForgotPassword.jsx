@@ -9,6 +9,7 @@ const ForgotPassword = () => {
     setEmail(value);
   }
 
+  /* Send request to the server to receive reset email generated in the server */
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axiosInstance.post('api/auth/forgot-password', {email});

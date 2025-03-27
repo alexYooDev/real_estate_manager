@@ -11,9 +11,13 @@ const Profile = () => {
   });
   const [loading, setLoading] = useState(false);
 
+
   useEffect(() => {
-    // Fetch profile data from the backend
+
+    /* Fetch user's detail from the server */
     const fetchProfile = async () => {
+
+      /* loading state to true to wait for data retrieval */
       setLoading(true);
       try {
         const response = await axiosInstance.get('/api/auth/profile', {
@@ -27,6 +31,7 @@ const Profile = () => {
       } catch (error) {
         alert('Failed to fetch profile. Please try again.');
       } finally {
+        /* set loading to false when fetching is done or encountered error */
         setLoading(false);
       }
     };

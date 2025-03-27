@@ -11,15 +11,15 @@ const generateToken = (id) => {
 
 const registerUser = async (req, res) => {
 
-    // Roles added for user authorization
+    /* retrieve user input from the request body*/
     const { name, email, password, role, agency } = req.body;
     try {
         const userExists = await User.findOne({ email });
+
         if (userExists) return res.status(400).json({ message: 'User already exists' });
 
         const user = await User.create({ name, email, password, role, agency });
 
-        // include role to create new user 
         res.status(201).json({ id: user.id, name: user.name, email: user.email, role: user.role, agency: user.agency, token: generateToken(user.id) });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -27,10 +27,12 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
+
   /* get email and password from request */
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
+        /* compare user input password with the pre-stored hashed password */
         if (user && (await bcrypt.compare(password, user.password))) {
             res.json({ id: user.id, name: user.name, email: user.email, role: user.role, savedProperties: user.savedProperties, propertiesListed: user.propertiesListed, token: generateToken(user.id) });
         } else {
@@ -169,12 +171,13 @@ const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { newPassword } = req.body;
 
-    // Hash the token and search for the user
+    /* Hash the token and search for the user */
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
     
+    /* find user with the valid token */
     const user = await User.findOne({
       resetPasswordToken: hashedToken,
-      // Check if token is still valid
+      /* Check if token is still valid */
       resetPasswordExpires: { $gt: Date.now() },
     });
 
@@ -184,7 +187,7 @@ const resetPassword = async (req, res) => {
 
     user.password = newPassword
 
-    // Clear reset token fields
+    /* clear user's reset password token from the collection upon setting new password */
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
@@ -211,7 +214,7 @@ const updateSavedPost = async (req, res) => {
 
     let updatedUser;
 
-    // if user already saved the same post
+    // if user already saved the same post, unsave : remove previously saved property
     if (propertyExists) {
       user.savedProperties = user.savedProperties.filter(
         (id) => id.toString() !== propertyId

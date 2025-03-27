@@ -50,6 +50,8 @@ const createProperty =  async (req, res) => {
 };
 
 const getPropertiesAll = async (_, res) => {
+    
+    try {
     const properties = await Property.find();
 
     if (!properties) {
@@ -57,8 +59,6 @@ const getPropertiesAll = async (_, res) => {
     }
 
     res.status(200).json(properties);
-
-    try {
         
     } catch(error) {
         res.status(500).json({message: error.message});

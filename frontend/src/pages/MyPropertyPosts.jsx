@@ -10,6 +10,7 @@ const MyPropertyPosts = () => {
     const {user} = useAuth();
     const {properties, setProperties} = useProperties();
 
+    /* Fetch all properties from the server and process data in the Frontend where (property's agent id equals to user's id) */
     useEffect(() => {
         const fetchProperties = async () => {
           try {
@@ -29,16 +30,14 @@ const MyPropertyPosts = () => {
         fetchProperties();
     }, []);
 
+    if(!user) {
+      return <Error401 />;
+    }
+
     return (
-      <div>
-        { !user ? <Error401/> : 
-        <>
-          <h2 className='m-6 text-2xl font-semibold'>
-            🏡 {user.name}'s Posts
-          </h2>
-          <PropertyList properties={properties} user={user} />
-        </>
-        }
+      <div className='min-h-screen mx-auto mt-20'>
+        <h2 className='m-6 text-2xl font-semibold'>🏡 {user.name}'s Posts</h2>
+        <PropertyList properties={properties} user={user} />
       </div>
     );
 }

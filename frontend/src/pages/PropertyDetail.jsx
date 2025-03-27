@@ -10,9 +10,11 @@ const PropertyDetail = () => {
     const {user} = useAuth();
     const navigate = useNavigate();
 
+
+    /* user communication functionality : customer user sends inquiry email to agent user*/
     const handleClickContact = () => {
 
-      let proceed 
+      let proceed;
 
       /* if not logged in, prompt user to login */
       if (!user) {
@@ -34,10 +36,11 @@ const PropertyDetail = () => {
             sheduleDate
           ).toLocaleString('en-AU')}`;
         } 
+        /* email body template to be put in the initial email */
         const body = encodeURIComponent(
           `Hi! I am interested in inquiring about your property at ${property.location}.\n ${inspectionStatement} \n Please let me know more details!`
         );
-        window.location.href = `mailto:${agent.email}?subject=${title}&body=${body}`;
+         window.location.href = `mailto:${agent.email}?subject=${title}&body=${body}`;
       }
     };
     
@@ -124,12 +127,12 @@ const PropertyDetail = () => {
                 <p className='text-gray-600'>{agent.email}</p>
               </div>
             </div>
-            {/* Avaiable for inspection */}
+            {/* visible whe user is not creator of the post and posts have available dates for inspection */}
             {user?._id !== agent && property.inspection.length > 0 && (
               <div className='grid items-center justify-between grid-flow-col m-3'>
                 <div>
                   <h3 className='text-xl font-bold text-gray-800'>
-                    Inspection Available on
+                    Inspection Available On
                   </h3>
                   <ul className='grid grid-flow-row gap-2 grid-col-2'>
                     {property.inspection.map((ins) => (
@@ -142,7 +145,7 @@ const PropertyDetail = () => {
                     className='text-lg font-bold text-gray-800'
                     htmlFor='inspection'
                   >
-                    Schedule Inspection At
+                    Schedule Inspection On
                   </label>
                   <select
                     name='inspection'
