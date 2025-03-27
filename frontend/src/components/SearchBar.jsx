@@ -32,8 +32,8 @@ const SearchBar = () => {
     }));
   };
 
-  const handleSearchSubmit = async () => {
-
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
     const query = new URLSearchParams(filters).toString();
     try {
       const response = await axiosInstance.get(`/api/search-property?${query}`);
