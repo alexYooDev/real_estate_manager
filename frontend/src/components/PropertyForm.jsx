@@ -16,13 +16,14 @@ const PropertyForm = ({property, isEditing}) => {
   const [availableDate, setAvailableDate] = useState();
   const [inspectionSchedule, setInspectionSchedule] = useState([]);
 
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     price: 0,
     location: '',
     area: 0,
-    features: features,
+    features: [],
     type: 'apartment',
     bedrooms: '',
     bathrooms: '',
@@ -35,38 +36,55 @@ const PropertyForm = ({property, isEditing}) => {
   // this runs only when the components mounts 
   useEffect(() => {
     if (property) {
-      setFeatures(property.features);
-      setInspectionSchedule(property.inspection)
+
+      setFeatures(property.features || []);
+      setInspectionSchedule(property.inspection || []);
+
+      setFormData({
+        ...property,
+        features: property.features || [],
+        inspection: property.inspection || [],
+      });
+      
+    } else {
+      setFormData(
+        property || {
+          title: '',
+          description: '',
+          price: 0,
+          area: 0,
+          features: features || [],
+          location: '',
+          type: 'apartment',
+          bedrooms: '',
+          bathrooms: '',
+          agent: user?.id,
+          inspection: inspectionSchedule ||[],
+          status: 'for sale',
+        }
+      );
     }
-    setFormData(
-      property || {
-        title: '',
-        description: '',
-        price: 0,
-        area: 0,
-        features: features,
-        location: '',
-        type: 'apartment',
-        bedrooms: '',
-        bathrooms: '',
-        agent: user?.id,
-        inspection: inspectionSchedule,
-        status: 'for sale',
-      }
-    );
-  }, [])
+  }, [property, user]);
 
+  /* on features & inspectionSchedule state changes, it is applied to formData*/
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      features: [...features],
+      inspection: [...inspectionSchedule],
+    }));
+  }, [features, inspectionSchedule]);
 
-  const handleChange = (e) => {    const { name, value } = e.target;
-
+  const handleChange = (e) => {    
+    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleAddFeature = (e) => {
     e.preventDefault();
     if (feature.trim()) {
-      setFeatures((prev) => [...prev, feature]); // Add new feature to the array
-      setFeature(''); // Clear input field
+      setFeatures((prev) => [...prev, feature]);
+      setFeature('');
     }
   };
 
@@ -93,17 +111,12 @@ const PropertyForm = ({property, isEditing}) => {
     
     try {
       
-      const newFormData = {
-        ...formData,
-        features,
-        inspection: inspectionSchedule,
-      };
-
+   
       if (isEditing) {
         // only update property post when updating
         response = await axiosInstance.put(
-          `/api/update-property/${newFormData._id}`,
-          newFormData,
+          `/api/update-property/${formData._id}`,
+          formData,
           {
             headers: { Authorization: `Bearer ${user.token}` },
           }
@@ -118,12 +131,11 @@ const PropertyForm = ({property, isEditing}) => {
         // only create new property post when not updating
         response = await axiosInstance.post(
           '/api/create-property',
-          newFormData,
+          formData,
           {
             headers: { Authorization: `Bearer ${user.token}` },
           }
         );
-        console.log(response.message);
         alert('You have successfully created the post!');
         navigate('/view-property');
       }
@@ -270,7 +282,7 @@ const PropertyForm = ({property, isEditing}) => {
             id='features'
             type='text'
             className='w-4/5 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-            value={feature}
+            value={feature || ''}
             onChange={(e) => setFeature(e.target.value)}
             placeholder='Enter feature'
           />

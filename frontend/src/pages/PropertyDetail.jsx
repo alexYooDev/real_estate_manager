@@ -92,8 +92,7 @@ const PropertyDetail = () => {
             <div className='flex items-center mt-4 text-gray-700'>
               <span className='text-2xl font-semibold'>
                 {property.status === 'for rent'
-                  ? '$' +
-                    `${property.price.toLocaleString()} / Month'`
+                  ? '$' + `${property.price.toLocaleString()} / Month`
                   : '$' + property.price.toLocaleString()}
               </span>
             </div>
@@ -127,7 +126,7 @@ const PropertyDetail = () => {
               </div>
             </div>
             {/* visible whe user is not creator of the post and posts have available dates for inspection */}
-            {user?._id !== agent && property.inspection.length > 0 && (
+            {user?.id !== property.agent && property.inspection.length > 0 && (
               <div className='grid items-center justify-between grid-flow-col m-3'>
                 <div>
                   <h3 className='text-xl font-bold text-gray-800'>
@@ -162,7 +161,7 @@ const PropertyDetail = () => {
                 </div>
               </div>
             )}
-            {user?._id !== agent && (
+            {user?.id !== property.agent && (
               <button
                 onClick={handleClickContact}
                 className='w-full py-3 text-lg font-semibold text-white transition bg-blue-500 rounded-lg hover:bg-blue-700'
