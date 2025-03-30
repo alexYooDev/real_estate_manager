@@ -92,9 +92,7 @@ const PropertyDetail = () => {
             <div className='flex items-center mt-4 text-gray-700'>
               <span className='text-2xl font-semibold'>
                 {property.status === 'for rent'
-                  ? '$' +
-                    `${property.price.toLocaleString()}` +
-                    ' / Month'
+                  ? '$' + `${property.price.toLocaleString()}` + ' / Month'
                   : '$' + property.price.toLocaleString()}
               </span>
             </div>
@@ -163,12 +161,14 @@ const PropertyDetail = () => {
                 </div>
               </div>
             )}
-            <button
-              onClick={handleClickContact}
-              className='w-full py-3 text-lg font-semibold text-white transition bg-blue-500 rounded-lg hover:bg-blue-700'
-            >
-              Contact Agent
-            </button>
+            {user?._id !== agent && (
+              <button
+                onClick={handleClickContact}
+                className='w-full py-3 text-lg font-semibold text-white transition bg-blue-500 rounded-lg hover:bg-blue-700'
+              >
+                Contact Agent
+              </button>
+            )}
           </div>
         </div>
       </div>
