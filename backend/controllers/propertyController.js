@@ -83,7 +83,7 @@ const getSavedProperties = async (req, res) => {
 
     try {
 
-        const user = await User.findById(userId);
+        const user = await User.findById(req.user.id);
         
         const savedProperties = await Property.find({_id: { $in: user.savedProperties }})
         
