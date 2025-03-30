@@ -93,7 +93,7 @@ const PropertyForm = ({property, isEditing}) => {
     
     try {
       
-      const updatedFormData = {
+      const newFormData = {
         ...formData,
         features,
         inspection: inspectionSchedule,
@@ -102,8 +102,8 @@ const PropertyForm = ({property, isEditing}) => {
       if (isEditing) {
         // only update property post when updating
         response = await axiosInstance.put(
-          `/api/update-property/${updatedFormData._id}`,
-          updatedFormData,
+          `/api/update-property/${newFormData._id}`,
+          newFormData,
           {
             headers: { Authorization: `Bearer ${user.token}` },
           }
@@ -116,9 +116,13 @@ const PropertyForm = ({property, isEditing}) => {
         
       } else {
         // only create new property post when not updating
-        response = await axiosInstance.post('/api/create-property', formData, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
+        response = await axiosInstance.post(
+          '/api/create-property',
+          newFormData,
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        );
         console.log(response.message);
         alert('You have successfully created the post!');
         navigate('/view-property');
