@@ -14,7 +14,7 @@ const populateDB = async () => {
       fs.readFileSync('./brisbane_properties.json', 'utf-8')
     );
 
-    await Property.deleteMany({})
+    await Property.deleteMany({});
 
     // Insert new data
     await Property.insertMany(propertyData);
