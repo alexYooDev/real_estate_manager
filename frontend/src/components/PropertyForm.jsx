@@ -57,11 +57,6 @@ const PropertyForm = ({property, isEditing}) => {
   }, [])
 
 
-  // this runs every time features state updates
-  useEffect(() => {
-    setFormData((prev) => ({...prev, features}))
-  }, [features])
-
   const handleChange = (e) => {    const { name, value } = e.target;
 
     setFormData({ ...formData, [name]: value });
@@ -95,12 +90,20 @@ const PropertyForm = ({property, isEditing}) => {
 
     let response;
 
+    
     try {
+      
+      const updatedFormData = {
+        ...formData,
+        features,
+        inspection: inspectionSchedule,
+      };
+
       if (isEditing) {
         // only update property post when updating
         response = await axiosInstance.put(
-          `/api/update-property/${formData._id}`,
-          formData,
+          `/api/update-property/${updatedFormData._id}`,
+          updatedFormData,
           {
             headers: { Authorization: `Bearer ${user.token}` },
           }

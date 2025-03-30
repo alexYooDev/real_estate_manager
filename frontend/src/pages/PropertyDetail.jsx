@@ -92,7 +92,8 @@ const PropertyDetail = () => {
             <div className='flex items-center mt-4 text-gray-700'>
               <span className='text-2xl font-semibold'>
                 {property.status === 'for rent'
-                  ? '$' + `${property.price.toLocaleString()}` + ' / Month'
+                  ? '$' +
+                    `${property.price.toLocaleString()} / Month'`
                   : '$' + property.price.toLocaleString()}
               </span>
             </div>
