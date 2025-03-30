@@ -26,7 +26,7 @@ A full-stack real estate management application that allows users to view, save,
 - Express.js
 - MongoDB & Mongoose
 - JSON Web Token (JWT) for authentication
-- nodemailer (email generation)
+- nodemailer (email generation) # this feature is discarded due to hosting server's security settings (operational in local environment)
 
 ## Installation
 ### Prerequisites:
@@ -49,6 +49,7 @@ cd ../backend && npm install # Install backend dependencies
 # Create a .env file in the backend directory and configure:
 echo "MONGO_URI=[your_mongo_connection_string]" >> backend/.env
 echo "JWT_SECRET=[your_jwt_secret]" >> backend/.env
+# reset password email feature is discarded due to hosting server's security settings (operational in local environment)
 echo "ADMIN_EMAIL=[your gmail address after 2 steps authentication setting enabled]" >> backend/.env
 echo "ADMIN_EMAIL_PASS=[your gmail app password credentials]" >> backend/.env
 echo "PORT"=["port of your choice, default: 5001"] >> backend/.env
@@ -193,6 +194,7 @@ GET    /api/auth/profile    # Get User Profile Detail
 GET    /api/auth/detail/:id # Get Agent Detail
 PUT    /api/auth/profile    # Update User Profile
 PUT    /api/auth/save-post  # Update User's Saved Post
+# this feature is discarded due to hosting server's security settings (operational in local environment)
 POST   /api/auth/forgot-password  # Generate email with reset password link and send to user mail
 POST   /api/auth/reset-password   # Reset User Password
 
