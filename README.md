@@ -11,6 +11,9 @@ A full-stack real estate management application that allows users to view, save,
 - Responsive UI applied to the view
 - Secure API with JWT authentication (Create, Update, and Delete of Property Posts and Save / Unsave posts)
 
+## Project Management by JIRA
+- The Link to Jira Scrum board for Real Estate Manager App : https://connect-team-nsm96osm.atlassian.net/jira/software/projects/REMS/summary 
+
 ## Tech Stack
 ### Frontend:
 - React.js
