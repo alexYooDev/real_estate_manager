@@ -156,12 +156,17 @@ const forgotPassword = async (req, res) => {
 
     /* configure administrative email for reset password email genenration */
     const transporter = nodemailer.createTransport({
+      port: 465,
       service: 'gmail',
+      tls: {
+        rejectUnauthorized: false,
+      },
       auth: {
         user: process.env.ADMIN_EMAIL,
         pass: process.env.ADMIN_EMAIL_PASS,
-      }
+      },
     });
+
 
     /* send email with the configured email */
     await transporter.sendMail({
