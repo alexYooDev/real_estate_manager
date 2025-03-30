@@ -51,13 +51,14 @@ const Login = () => {
             Login
           </button>
         </form>
-        <button
+        {/* Forgot password doesn't work due to google and AWS security reason */}
+        {/* <button
           type='button'
           className='w-full p-2 mt-2 text-white bg-orange-600 rounded'
           onClick={() => navigate('/forgot-password')}
         >
           Forgot your password?
-        </button>
+        </button> */}
       </div>
     </div>
   );

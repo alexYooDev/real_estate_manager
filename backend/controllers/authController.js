@@ -132,7 +132,7 @@ const updateUserProfile = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   try {
-    /* get email input */
+
     const {email} = req.body;
     /* if user exists with the same email */
     const user = await User.findOne({email: email});
@@ -154,14 +154,9 @@ const forgotPassword = async (req, res) => {
     // redirect link for reset password page
     const resetLink = `http://3.27.92.143/reset-password/${resetToken}`;
 
-    /* configure administrative email for reset password email genenration */
+    /*  This doesn't work in the production version because of google security issue*/
     const transporter = nodemailer.createTransport({
-      port: 465,
       service: 'gmail',
-      host: 'smtp.gmail.com',
-      tls: {
-        rejectUnauthorized: false,
-      },
       auth: {
         user: process.env.ADMIN_EMAIL,
         pass: process.env.ADMIN_EMAIL_PASS,
