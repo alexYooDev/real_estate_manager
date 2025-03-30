@@ -30,7 +30,7 @@ const MySavedPosts = () => {
             setIsLoading(false);
             
           } catch (error) {
-            console.log(error.message);
+            console.log(error);
           } 
         };
         fetchSavedProperties();

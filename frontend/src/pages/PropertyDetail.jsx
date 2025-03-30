@@ -93,8 +93,8 @@ const PropertyDetail = () => {
               <span className='text-2xl font-semibold'>
                 {property.status === 'for rent'
                   ? '$' +
-                    ((property.price / 12) * 0.01).toLocaleString() +
-                    ' / Week'
+                    `${property.price.toLocaleString()}` +
+                    ' / Month'
                   : '$' + property.price.toLocaleString()}
               </span>
             </div>

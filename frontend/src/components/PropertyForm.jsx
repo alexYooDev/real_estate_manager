@@ -6,7 +6,7 @@ import Error401 from '../pages/Error401';
 
 /* eslint-disable react-hooks/exhaustive-deps  */
 
-const PropertyForm = ({property, isEditting}) => {
+const PropertyForm = ({property, isEditing}) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   
@@ -96,9 +96,15 @@ const PropertyForm = ({property, isEditting}) => {
     let response;
 
     try {
-      if (isEditting) {
+      if (isEditing) {
         // only update property post when updating
-        response = await axiosInstance.put(`/api/update-property/${formData._id}`, formData);
+        response = await axiosInstance.put(
+          `/api/update-property/${formData._id}`,
+          formData,
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        );
 
         if (response.data) {
           alert('You have successfully updated the post!');
@@ -107,13 +113,20 @@ const PropertyForm = ({property, isEditting}) => {
         
       } else {
         // only create new property post when not updating
-        response = await axiosInstance.post('/api/create-property', formData);
+        response = await axiosInstance.post('/api/create-property', formData, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
         console.log(response.message);
         alert('You have successfully created the post!');
         navigate('/view-property');
       }
     } catch(error) {
-      console.log(error);
+      if (isEditing) {
+        alert('Property update failed');
+      } else {
+        alert("Property creation failed!");
+
+      }
     } 
 
   };
@@ -127,7 +140,7 @@ const PropertyForm = ({property, isEditting}) => {
       onSubmit={handleSubmit}
       className='max-w-3xl p-6 mx-auto border border-gray-300 rounded-lg bg-gray-50'
     >
-      {isEditting ? (
+      {isEditing ? (
         <h2 className='mb-6 text-2xl font-semibold'>Update this Property</h2>
       ) : (
         <h2 className='mb-6 text-2xl font-semibold'>Add New Property</h2>
@@ -175,7 +188,7 @@ const PropertyForm = ({property, isEditting}) => {
         >
           <option value='for sale'>For Sale</option>
           <option value='for rent'>For Rent</option>
-          {isEditting && (
+          {isEditing && (
             <>
               <option value='pending'>Pending</option>
               <option value='sold'>Sold</option>

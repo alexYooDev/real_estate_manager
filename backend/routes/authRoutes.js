@@ -1,6 +1,15 @@
 
 const express = require('express');
-const { registerUser, loginUser, updateUserProfile, getProfile, getUserDetail, updateSavedPost, forgotPassword, resetPassword } = require('../controllers/authController');
+const {
+  registerUser,
+  loginUser,
+  updateUserProfile,
+  getProfile,
+  getAgentDetail,
+  updateSavedPost,
+  forgotPassword,
+  resetPassword,
+} = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 const router = express.Router();
 
@@ -9,7 +18,7 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 /* Profile */
-router.get('/detail/:id', getUserDetail);
+router.get('/detail/:id', getAgentDetail);
 router.get('/profile', protect, getProfile);
 router.put('/profile', protect, updateUserProfile);
 

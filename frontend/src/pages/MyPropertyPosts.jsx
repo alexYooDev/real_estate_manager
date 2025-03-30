@@ -5,7 +5,6 @@ import PropertyList from "../components/PropertyList";
 import axiosInstance from "../axiosConfig";
 import Error401 from "./Error401";
 
-/* eslint-disable react-hooks/exhaustive-deps  */
 
 const MyPropertyPosts = () => {
     
@@ -16,7 +15,9 @@ const MyPropertyPosts = () => {
     useEffect(() => {
         const fetchProperties = async () => {
           try {
-            const response = await axiosInstance.get('/api/view-all-property');
+            const response = await axiosInstance.get('/api/view-all-property', {
+              headers: { Authorization: `Bearer ${user.token}` },
+            });
             if (response) {
               setProperties(response.data);
             }

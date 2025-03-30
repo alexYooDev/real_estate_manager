@@ -1,4 +1,4 @@
-import PropertyCard from "./PropetyCard";
+import PropertyCard from "./PropertyCard";
 import { useProperties } from "../context/PropertyContext";
 import { useCallback } from "react";
 

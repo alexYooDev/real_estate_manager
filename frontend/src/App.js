@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import CreateProperties from './pages/CreateProperties';
+import CreateProperty from './pages/CreateProperty';
 import PropertiesFeed from './pages/PropertiesFeed';
 import PropertyDetail from './pages/PropertyDetail';
 import Main from './pages/Main';
@@ -27,7 +27,7 @@ function App() {
         <Route path='/reset-password/:token' element={<ResetPassword />} />
         <Route path='/view-property' element={<PropertiesFeed />} />
         <Route path='/view-detail' element={<PropertyDetail />} />
-        <Route path='/create-property' element={<CreateProperties />} />
+        <Route path='/create-property' element={<CreateProperty />} />
         <Route path='/update-property' element={<UpdateProperty />} />
         <Route path='/my-post' element={<MyPropertyPosts />} />
         <Route path='/saved-post' element={<MySavedPosts />} />

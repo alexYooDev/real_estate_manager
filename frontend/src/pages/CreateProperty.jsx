@@ -1,7 +1,8 @@
 import PropertyForm from '../components/PropertyForm';
 
-const Properties = () => {
+const CreateProperty = () => {
 
+  /* Default Property Form for Property Creation */
   return (
     <div className="container p-6 mx-auto">
       <PropertyForm/>
@@ -9,4 +10,4 @@ const Properties = () => {
   );
 };
 
-export default Properties;
+export default CreateProperty;

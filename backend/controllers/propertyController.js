@@ -2,7 +2,20 @@ const Property = require('../models/Property');
 const User = require('../models/User')
 
 const createProperty =  async (req, res) => {
-    const {title, description, price, location, type, area, bedrooms, bathrooms, agent, inspection, status} = req.body;
+    const { 
+        title, 
+        description, 
+        price, 
+        location, 
+        type, 
+        area, 
+        bedrooms, 
+        bathrooms, 
+        agent, 
+        inspection, 
+        status
+    } = req.body;
+
     
     try {
 
@@ -51,8 +64,8 @@ const createProperty =  async (req, res) => {
 
 const getPropertiesAll = async (_, res) => {
 
-    
     try {
+
     const properties = await Property.find();
 
         if (!properties) {
@@ -70,7 +83,6 @@ const getSavedProperties = async (req, res) => {
 
     try {
 
-        const userId = req.user._id;
         const user = await User.findById(userId);
         
         const savedProperties = await Property.find({_id: { $in: user.savedProperties }})
@@ -120,13 +132,12 @@ const searchProperty = async (req, res) => {
 const updateProperty = async (req, res) => {
 
    try {
-
         const updatedProperty = await Property.findByIdAndUpdate(
-          req.params.id,
-          req.body,
-          { new: true, runValidators: true }
+            req.params.id,
+            req.body,
+            { new: true, runValidators: true }
         );
-
+        
         if (!updatedProperty) {
             return res.status(404).json({message: 'Property not found!'});
         } 
@@ -139,11 +150,11 @@ const updateProperty = async (req, res) => {
 
 const deleteProperty = async (req,res) => {
 
-    const id = req.body._id
-    try {
-        const propertyToDelete = await Property.deleteOne({_id: id});
+    const id = req.params.id
 
-        res.json({message: "property deleted"});
+    try {
+        await Property.findByIdAndDelete(id);
+        res.status(200).json({message: "property deleted"});
     } catch(error) {
         res.status(500).json({message: "delete failed"});
     }

@@ -20,17 +20,13 @@ const useFormValition = (initState, validateFunction) => {
         }
     };
 
-    if (checkPassword === formData.password) {
-
-    }
-
     const isValidated = () => {
         const currentErrors = validateFunction(formData, checkPassword);
         setErrors(currentErrors);
         return Object.keys(currentErrors).length === 0;
     }
 
-    return { formData, checkPassword, errors, handleChange, isValidated, isAgent};
+    return { formData, errors, handleChange, isValidated, isAgent};
 }
 
 export default useFormValition;

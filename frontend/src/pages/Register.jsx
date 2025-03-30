@@ -12,19 +12,19 @@ const Register = () => {
     validateForm
   );
 
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData.password, checkPassword);
-    
     try {
 
       // if all the user input is validated 
       if (isValidated()) {
-        await axiosInstance.post('/api/auth/register', formData);
+        await axiosInstance.post(
+          '/api/auth/register',
+          formData
+        );
         alert('Registration successful. Please log in.');
         navigate('/login');
       }

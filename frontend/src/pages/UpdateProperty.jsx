@@ -8,11 +8,11 @@ const UpdateProperty = () => {
   } = useLocation();
 
   // eslint-disable-next-line no-unused-vars
-  const [isEditting, setIsEditting] = useState(true);
+  const [isEditing, setIsEdtting] = useState(true);
 
   return (
     <div className='container p-6 mx-auto'>
-      <PropertyForm property={property} isEditting={isEditting} />
+      <PropertyForm property={property} isEditing={isEditing} />
     </div>
   );
 }

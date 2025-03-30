@@ -19,7 +19,7 @@ const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => 
         );
         setAgent(response.data);
       } catch (error) {
-        console.log(error);
+        alert("Couldn't get the agent details!");
       }
     };
     fetchAgentProfile();
@@ -86,7 +86,7 @@ const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => 
         });
       }
     } catch (error) {
-      console.log(error.message);
+      alert("Sorry, saving/unsaving attempt was unsuccessful.");
     }
   };
 
@@ -119,8 +119,8 @@ const PropertyCard = ({property, onUnsave, savedProperties, user, onDelete}) => 
 
     if (proceed) {
       try {
-        await axiosInstance.delete('/api/delete-property', {
-          _id: property._id,
+        await axiosInstance.delete(`/api/delete-property/${property._id}`, {
+          headers: { Authorization: `Bearer ${user.token}` },
         });
         onDelete(property._id);
       } catch (error) {

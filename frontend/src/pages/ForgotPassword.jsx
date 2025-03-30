@@ -11,11 +11,15 @@ const ForgotPassword = () => {
 
   /* Send request to the server to receive reset email generated in the server */
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await axiosInstance.post('api/auth/forgot-password', {email});
-
-    const data = response.data;
-    alert(data.message);
+    try {
+      e.preventDefault();
+      const response = await axiosInstance.post('api/auth/forgot-password', {email});
+      
+      const data = response.data;
+      alert(data.message);
+    } catch(error) {
+      alert("Sening reset link failed!");
+    }
   };
 
   return (

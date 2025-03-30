@@ -26,7 +26,6 @@ let port;
 
 
 // Mock property response
-
 const res = {
   status: sinon.stub().returnsThis(),
   json: sinon.spy(),
@@ -51,7 +50,7 @@ const req = {
 
 describe('Property API Tests', () => {
 
-  /* Create */
+  /* Create  Property*/
   describe('Create Property API Test', () => {
     it("should create a property and update the agent's property list", async () => {
       const mockAgent = {
@@ -73,7 +72,6 @@ describe('Property API Tests', () => {
         inspection: [],
         status: 'available',
       };
-
       /* Mock Property Model and User Model */
       const findByIdStub = sinon.stub(User, 'findById').resolves(mockAgent);
       const createStub = sinon.stub(Property, 'create').resolves(mockProperty);
@@ -82,7 +80,6 @@ describe('Property API Tests', () => {
         .resolves(mockAgent);
 
       await createProperty(req, res);
-
 
       expect(res.status.calledWith(201)).to.be.true;
 
@@ -241,10 +238,10 @@ describe('Property API Tests', () => {
 
   describe('Delete Property API Test', () => {
     it('should delete a property', async () => {
-      req.body._id = 'property123';
+      req.params.id = 'property123';
       const deleteOneStub = sinon
-        .stub(Property, 'deleteOne')
-        .resolves({ deletedCount: 1 });
+        .stub(Property, 'findByIdAndDelete')
+        .resolves({ _id: 'property123' });
 
       await deleteProperty(req, res);
 
@@ -255,7 +252,7 @@ describe('Property API Tests', () => {
     });
 
     it('should return 500 if property deletion fails', async () => {
-      deleteOneStub = sinon.stub(Property, 'deleteOne').throws();
+      deleteOneStub = sinon.stub(Property, 'findByIdAndDelete').throws();
 
       await deleteProperty(req, res);
 

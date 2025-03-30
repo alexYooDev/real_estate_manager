@@ -20,9 +20,16 @@ const registerUser = async (req, res) => {
 
         const user = await User.create({ name, email, password, role, agency });
 
-        res.status(201).json({ id: user.id, name: user.name, email: user.email, role: user.role, agency: user.agency, token: generateToken(user.id) });
+        res.status(201).json({ 
+          id: user.id, 
+          name: user.name, 
+          email: user.email, 
+          role: user.role, 
+          agency: user.agency, 
+          token: generateToken(user.id) 
+        });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
@@ -34,29 +41,37 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
         /* compare user input password with the pre-stored hashed password */
         if (user && (await bcrypt.compare(password, user.password))) {
-            res.json({ id: user.id, name: user.name, email: user.email, role: user.role, savedProperties: user.savedProperties, propertiesListed: user.propertiesListed, token: generateToken(user.id) });
+            res.status(200).json({ 
+              id: user.id, 
+              name: user.name, 
+              email: user.email, 
+              role: user.role, 
+              savedProperties: user.savedProperties, 
+              propertiesListed: user.propertiesListed, 
+              token: generateToken(user.id) 
+            });
         } else {
-            res.status(401).json({ message: 'Invalid email or password' });
+            res.status(401).json({ message: 'Invalid email or password', error: error.message });
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
-const getUserDetail = async(req, res) => {
+const getAgentDetail = async(req, res) => {
 
     try {
-      const user = await User.findById(req.params.id);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+      const agent = await User.findById(req.params.id);
+      if (!agent) {
+        return res.status(404).json({ message: 'Agent not found' });
       }
 
       res.status(200).json({
-        name: user.name,
-        email: user.email,
-        agency: user.agency,
-        propertiesListed: user.propertiesListed,
-        savedProperties: user.savedProperties,
+        name: agent.name,
+        email: agent.email,
+        agency: agent.agency,
+        propertiesListed: agent.propertiesListed,
+        savedProperties: agent.savedProperties,
       });
     } catch (error) {
       res.status(500).json({ message: 'Server error', error: error.message });
@@ -67,7 +82,7 @@ const getProfile = async (req, res) => {
     try {
       const user = await User.findById(req.user.id);
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ message: 'User not found', error: error.message });
       }
   
       res.status(200).json({
@@ -87,7 +102,7 @@ const updateUserProfile = async (req, res) => {
       
         const user = await User.findById(req.user.id);
 
-        if (!user) return res.status(404).json({ message: 'User not found' });
+        if (!user) return res.status(404).json({ message: 'User not found', error: error.message });
 
 
         const { name, email, agency, savedProperties, propertiesListed } = req.body;
@@ -111,7 +126,7 @@ const updateUserProfile = async (req, res) => {
         });
     
       } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -162,7 +177,7 @@ const forgotPassword = async (req, res) => {
     res.json({ message: 'Reset link sent to email!' });
 
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 }
 
@@ -182,7 +197,7 @@ const resetPassword = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ message: 'Invalid or expired token' });
+      return res.status(400).json({ message: 'Invalid or expired token', error: error.message });
     }
 
     user.password = newPassword
@@ -196,7 +211,7 @@ const resetPassword = async (req, res) => {
     res.json({ message: 'Password updated successfully!' });
 
   } catch(error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 }
 
@@ -206,7 +221,7 @@ const updateSavedPost = async (req, res) => {
     const user = await User.findById(req.user.id);
     
     if (!user) {
-      return res.status(404).json({message: "User not found!"});
+      return res.status(404).json({message: "User not found!", error: error.message});
     }
 
     const { propertyId } = req.body;
@@ -237,10 +252,17 @@ const updateSavedPost = async (req, res) => {
     });
     
   } catch (error) {
-    res.status(500).json({message:error.message});
+    res.status(500).json({message: "server error", error: error.message});
   }
-
-
 }
 
-module.exports = { registerUser, loginUser, updateUserProfile, getProfile, getUserDetail, updateSavedPost, forgotPassword, resetPassword };
+module.exports = {
+  registerUser,
+  loginUser,
+  updateUserProfile,
+  getProfile,
+  getAgentDetail,
+  updateSavedPost,
+  forgotPassword,
+  resetPassword,
+};
