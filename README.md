@@ -30,7 +30,7 @@ A full-stack real estate management application that allows users to view, save,
 
 ## Installation
 ### Prerequisites:
-- **Node.js** (>= 16)
+- **Node.js** (v22)
 - **MongoDB** (Local or Atlas Cloud)
 
 ### Development Side Steps:
@@ -38,6 +38,8 @@ A full-stack real estate management application that allows users to view, save,
 # Clone the repository
 git clone https://github.com/your-username/real-estate-manager.git
 cd real-estate-manager
+git remote remove origin #unlink with my origin remote repository
+git remote add origin "your git repository url" 
 
 # Install dependencies for both frontend and backend
 cd frontend && npm install   # Install frontend dependencies
