@@ -152,7 +152,7 @@ const forgotPassword = async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000;
 
     // redirect link for reset password page
-    const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
+    const resetLink = `http://3.27.92.143/reset-password/${resetToken}`;
 
     /* configure administrative email for reset password email genenration */
     const transporter = nodemailer.createTransport({

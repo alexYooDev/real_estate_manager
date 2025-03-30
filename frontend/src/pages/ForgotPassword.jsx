@@ -18,7 +18,7 @@ const ForgotPassword = () => {
       const data = response.data;
       alert(data.message);
     } catch(error) {
-      alert("Sening reset link failed!");
+      alert("Sending reset link failed!");
     }
   };
 
