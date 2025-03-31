@@ -69,6 +69,7 @@ describe('Property API Tests', () => {
         bedrooms: 2,
         bathrooms: 1,
         agent: 'agent_id',
+        features: [],
         inspection: [],
         status: 'available',
       };
@@ -95,6 +96,7 @@ describe('Property API Tests', () => {
           bedrooms: mockProperty.bedrooms,
           bathrooms: mockProperty.bathrooms,
           agent: mockProperty.agent,
+          features: mockProperty.features,
           inspection: mockProperty.inspection,
           status: mockProperty.status,
         })

@@ -12,7 +12,8 @@ const createProperty =  async (req, res) => {
         bedrooms, 
         bathrooms, 
         agent, 
-        inspection, 
+        inspection,
+        features, 
         status
     } = req.body;
 
@@ -34,7 +35,8 @@ const createProperty =  async (req, res) => {
             type, 
             bedrooms, 
             bathrooms,
-            agent, 
+            agent,
+            features, 
             inspection,
             status
         });
@@ -53,6 +55,7 @@ const createProperty =  async (req, res) => {
             bedrooms: property.bedrooms,
             bathrooms: property.bathrooms,
             agent: property.agent,
+            features: property.features,
             inspection: property.inspection || [],
             status: property.status
         });
