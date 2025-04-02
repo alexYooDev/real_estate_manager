@@ -5,14 +5,14 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import CreateProperty from './pages/CreateProperty';
 import PropertiesFeed from './pages/PropertiesFeed';
+import UpdateProperty from './pages/UpdateProperty';
 import PropertyDetail from './pages/PropertyDetail';
 import Main from './pages/Main';
-import UpdateProperty from './pages/UpdateProperty';
 import MyPropertyPosts from './pages/MyPropertyPosts';
-import Footer from './components/Footer';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import MySavedPosts from './pages/MySavedPosts';
+import Footer from './components/Footer';
 
 function App() {
   return (

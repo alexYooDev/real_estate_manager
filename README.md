@@ -1,11 +1,13 @@
 # Real Estate Manager
 
-A full-stack real estate management application that allows users to view, save, and manage property listings. Built using **Node.js, Express, React, and MongoDB**.
+A full-stack real estate management application that allows users to view, save, and manage property listings. Built using **Node.js, Express, React, and MongoDB**.'
+
+Navigate to http://3.27.92.143/ access our serivce!
 
 ## Features
 - User authentication (Login/Register)
 - Property Post Management (Create, Read, Update, Delete)
-- User Profile Management (Update user profile, reset password via email with link)
+- User Profile Management (Update user profile, reset password via email with link - discarded due to security error)
 - Save and unsave properties
 - Contact property agents (via email)
 - Responsive UI applied to the view
