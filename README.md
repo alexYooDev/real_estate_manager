@@ -2,8 +2,6 @@
 
 A full-stack real estate management application that allows users to view, save, and manage property listings. Built using **Node.js, Express, React, and MongoDB**.'
 
-Navigate to http://3.27.92.143/ access our serivce!
-
 ## Features
 - User authentication (Login/Register)
 - Property Post Management (Create, Read, Update, Delete)
